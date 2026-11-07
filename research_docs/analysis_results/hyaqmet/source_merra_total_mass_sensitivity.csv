@@ -1,3 +1,0 @@
-a,b,n,bias_a_minus_b,RMSE,MAE,Pearson_r,Spearman_rho,identity_R2_a_reference,warning
-cams_pm25_ugm3,source_merra_labelled_total_PM25,52584,57.35709856458389,84.93605855052118,59.025048018062265,0.6530504890834739,0.7229287793863968,-0.18470630189181092,"Source-extract total-labelled model quantity, not independent truth; not a released final field"
-merra_component_sum_ugm3,source_merra_labelled_total_PM25,52584,-7.574486300755934,9.453388205241357,7.574486300755934,0.9861978344453313,0.9760280258303996,0.878417871181139,"Source-extract total-labelled model quantity, not independent truth; not a released final field"

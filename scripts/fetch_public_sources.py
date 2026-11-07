@@ -14,8 +14,8 @@ import tempfile
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-POWER_PARAMS = {'parameters':'T2M,T2MDEW,RH2M,WS10M,PRECTOTCORR,PS','community':'AG','longitude':90.40744,'latitude':23.7104,'start':'20220101','end':'20251231','format':'JSON','time-standard':'UTC'}
-POWER_EMBASSY_PARAMS = dict(POWER_PARAMS,latitude=23.796374,longitude=90.424614,start="20160101",end="20211231")
+POWER_EMBASSY_PARAMS = {'parameters':'T2M,T2MDEW,RH2M,WS10M,PRECTOTCORR,PS','community':'AG','longitude':90.424614,'latitude':23.796374,'start':'20160101','end':'20211231','format':'JSON','time-standard':'UTC'}
+POWER_UNITS = {'T2M':'C','T2MDEW':'C','RH2M':'%','WS10M':'m/s','PRECTOTCORR':'mm/day','PS':'kPa'}
 MAX_BYTES = 5 * 1024 * 1024
 
 
@@ -40,9 +40,7 @@ def main():
     urls=[
         ('Figure_1_data.xlsx','https://pasteur.epa.gov/uploads/10.23719/1528454/Figure_1_data.xlsx','87f2d78c8722c86ec000098819aa90fe19eb75902180a5b2667ea0f5dda0a5db'),
         ('figshare_airnow_12cities.zip','https://ndownloader.figshare.com/files/24024083',None),
-        ('nasa_power_2022_2025.json','https://power.larc.nasa.gov/api/temporal/daily/point?'+urlencode(POWER_PARAMS),None),
         ('nasa_power_embassy_2016_2021.json','https://power.larc.nasa.gov/api/temporal/daily/point?'+urlencode(POWER_EMBASSY_PARAMS),None),
-        ('mendeley_v2_files.json','https://data.mendeley.com/public-api/datasets/9j447cynb9/files?folder_id=root&version=2&%24start=0&%24limit=1000',None),
     ]
     log=[]
     with tempfile.TemporaryDirectory(prefix='.public-sources-',dir=args.output.parent) as staging:
@@ -56,14 +54,10 @@ def main():
             if name.startswith('nasa'):
                 data=json.loads(payload)
                 if data['header']['time_standard']!='UTC':raise ValueError('NASA response did not confirm UTC')
-                if set(data['properties']['parameter'])!=set(POWER_PARAMS['parameters'].split(',')):
+                if set(data['properties']['parameter'])!=set(POWER_EMBASSY_PARAMS['parameters'].split(',')):
                     raise ValueError('Unexpected NASA parameter set')
-            if name.startswith('mendeley'):
-                data=json.loads(payload)
-                records=data if isinstance(data,list) else data.get('data',[])
-                record=next(x for x in records if x['filename']=='AQI Bangladesh.csv')
-                if record['content_details']['sha256_hash']!='8760175fc048eea4180b828fd60d10cb799a73a5144a7e4aca19ddbaf8dbdd62':
-                    raise ValueError('Mendeley V2 deposited checksum differs from inspected upload')
+                for field,unit in POWER_UNITS.items():
+                    if data['parameters'][field]['units']!=unit:raise ValueError(f'Unexpected NASA units for {field}')
             (out/name).write_bytes(payload)
             log.append({'filename':name,'request_url':url,'resolved_url':final_url,'bytes':len(payload),'sha256':digest})
         (out/'download_manifest.json').write_text(json.dumps(log,indent=2)+'\n')

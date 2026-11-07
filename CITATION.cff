@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+type: software
+message: >-
+  Cite this repository for its computational analysis and cite the original
+  datasets separately. This research software and its reports
+  are not a peer-reviewed publication.
+title: 'Seasonal PM2.5 Patterns and Meteorological Associations in Dhaka, Bangladesh'
+authors:
+  - family-names: Roy
+    given-names: Bipul
+repository-code: 'https://github.com/Bipul-roy-AI/Dhaka-Air-Quality-Climate-Research'
+url: 'https://github.com/Bipul-roy-AI/Dhaka-Air-Quality-Climate-Research'
+keywords:
+  - Dhaka
+  - air quality
+  - PM2.5
+  - atmospheric reanalysis
+  - time series
+  - reproducible research

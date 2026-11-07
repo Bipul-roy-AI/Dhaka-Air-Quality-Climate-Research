@@ -1,4 +1,4 @@
-"""Normalize inspected EPA figure data and NASA daily candidate without extra dependencies.
+"""Normalize the EPA observed series and NASA embassy-period weather source.
 
 This is a source-audit utility, not a replacement forecasting or validation run.
 """
@@ -63,17 +63,15 @@ def main():
     args=parser.parse_args()
     if args.output.exists():parser.error('Choose a new output directory')
     epa=epa_daily(args.sources/'Figure_1_data.xlsx')
-    power,units=power_daily(args.sources/'nasa_power_2022_2025.json')
+    power,units=power_daily(args.sources/'nasa_power_embassy_2016_2021.json')
+    expected=pd.date_range('2016-01-01','2021-12-31')
+    if not power.index.equals(expected.rename('date_utc')):
+        raise ValueError('Expected the complete 2016–2021 NASA daily calendar')
     args.output.mkdir(parents=True)
     full=pd.DataFrame({'date':pd.date_range('2016-01-01','2021-12-31')}).merge(epa,on='date',how='left',validate='one_to_one')
     full.to_csv(args.output/'epa_observed_daily_calendar.csv',index=False)
-    power.to_csv(args.output/'nasa_power_daily_candidate.csv')
-    manifest={'epa_doi':'10.23719/1528454','epa_observed_days':len(epa),'epa_missing_days':int(full.pm25_ugm3.isna().sum()),'epa_date_mapping':'Caption2016-01-01 to2021-12-31 with1-based day index; exact averaging timezone and daily QA rules unspecified','nasa_days':len(power),'nasa_original_units':units,'nasa_fill_counts':power.isna().sum().to_dict(),'nasa_source':'MERRA2/POWER; model-derived meteorology, not original ERA5 or independent monitor truth','no_legacy_data_replaced':True,'no_validation_or_retraining_performed':True}
-    extra=args.sources/'nasa_power_embassy_2016_2021.json'
-    if extra.exists():
-        earlier,earlier_units=power_daily(extra)
-        earlier.to_csv(args.output/'nasa_power_embassy_daily_2016_2021.csv')
-        manifest['nasa_embassy_candidate']={'n_days':len(earlier),'native_units':earlier_units,'fill_counts':earlier.isna().sum().to_dict(),'epa_day_interval_aligned':False}
+    power.to_csv(args.output/'nasa_power_embassy_daily_2016_2021.csv')
+    manifest={'epa_doi':'10.23719/1528454','epa_observed_days':len(epa),'epa_missing_days':int(full.pm25_ugm3.isna().sum()),'epa_date_mapping':'Caption2016-01-01 to2021-12-31 with1-based day index; exact averaging timezone and daily QA rules unspecified','nasa_days':len(power),'nasa_original_units':units,'nasa_fill_counts':power.isna().sum().to_dict(),'nasa_source':'MERRA2/POWER; model-derived meteorology, not original ERA5 or independent monitor truth','no_legacy_data_replaced':True,'no_validation_or_retraining_performed':True,'epa_day_interval_aligned':False,'nasa_period':'2016-01-01 through2021-12-31'}
     (args.output/'inspection.json').write_text(json.dumps(manifest,indent=2)+'\n')
     print(json.dumps(manifest,indent=2))
 

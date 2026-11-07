@@ -66,6 +66,16 @@ class ObservedReferenceTests(unittest.TestCase):
             pd.DataFrame({"date":["2020-01-01"],"pm25_ugm3":[-99.]}).to_csv(path,index=False)
             with self.assertRaises(ValueError):a.load_daily(path)
 
+    def test_alternative_season_calendar_stays_separate_at_disputed_boundaries(self):
+        examples={"2020-02-15":("Winter","Spring"),
+                  "2020-08-15":("Monsoon","Autumn"),
+                  "2020-10-15":("Monsoon","Late_autumn"),
+                  "2020-12-15":("Late_autumn","Winter")}
+        for date,(published,alternative) in examples.items():
+            with self.subTest(date=date):
+                self.assertEqual(a.six_season(pd.Timestamp(date)),published)
+                self.assertEqual(a.six_season_release(pd.Timestamp(date)),alternative)
+
     def test_block_bootstrap_respects_calendar_gaps_and_reproducibility(self):
         index=pd.date_range("2016-01-01",periods=36,freq="MS")
         values=pd.Series(np.arange(36)/12,index=index)
