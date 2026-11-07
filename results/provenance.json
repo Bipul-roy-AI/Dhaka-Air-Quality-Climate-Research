@@ -1,0 +1,255 @@
+{
+  "run": {
+    "status": "all_four_tracks_completed",
+    "analyses": [
+      {
+        "track": "hyaqmet",
+        "script": "analyze_hyaqmet.py",
+        "script_sha256": "bfbfb8cbd846f8e5a02c14e35953205a252d597883649c61ffe372c060a0b60e",
+        "output": "hyaqmet",
+        "status": "completed"
+      },
+      {
+        "track": "observed",
+        "script": "analyze_observed_reference.py",
+        "script_sha256": "eb5835768749dbe6bd2aa7d424d21cc8bbfafd7457917fd0a3e5fd0bf01df239",
+        "output": "observed",
+        "status": "completed"
+      },
+      {
+        "track": "weather",
+        "script": "analyze_observed_weather.py",
+        "script_sha256": "9294f09c25d6397eab1f863f604aec533a68506ed198e3f12a836eb664075c97",
+        "output": "weather",
+        "status": "completed"
+      },
+      {
+        "track": "reference",
+        "script": "validate_hyaqmet_reference.py",
+        "script_sha256": "84e9b98f70419b15dbec2f67b6fcc7bb32af875cb01aeb3600e554790a86b327",
+        "output": "reference",
+        "status": "completed"
+      }
+    ],
+    "input_sha256": {
+      "release": "420f59fd7e7cd527f1475b309411f27cb8ce4085490ca5daba4e1c517e0c4649",
+      "epa": "2dcafb06a204dc0c13e1b7c20eb1c37af32ceba7a63eb6e6033e751f0ee1fd43",
+      "weather": "1a7c89c03ad5a1c14fd3494833a8dc210a7b39e3285b9f41f1033f85f1c0b16d",
+      "mirror": "3a4bdf277b02710ef6405d2cc284057056f76bd3552570ee7e0afce002c2245c"
+    },
+    "input_files_modified": false,
+    "all_results": "conditional/retrospective as detailed in per-track methods; not operational/causal certification"
+  },
+  "observed": {
+    "input_sha256": "2dcafb06a204dc0c13e1b7c20eb1c37af32ceba7a63eb6e6033e751f0ee1fd43",
+    "input_name": "epa_observed_daily_calendar.csv",
+    "first_date": "2016-01-01",
+    "last_date": "2021-12-31",
+    "overall": {
+      "calendar_days": 2192,
+      "observed_days": 2117,
+      "missing_days": 75,
+      "coverage_fraction": 0.9657846715328468,
+      "mean_ugm3": 87.18110746585016,
+      "median_ugm3": 60.70833333,
+      "std_ugm3": 65.04398514408709,
+      "p05_ugm3": 19.909523806000003,
+      "p25_ugm3": 35.41666667,
+      "p75_ugm3": 130.875,
+      "p95_ugm3": 212.77000001999912,
+      "max_ugm3": 340.7916667,
+      "days_gt_15": 2068,
+      "fraction_observed_gt_15": 0.9768540387340576
+    },
+    "minimum_monthly_coverage": 0.75,
+    "eligible_months": 69,
+    "excluded_months": [
+      "2018-04",
+      "2020-05",
+      "2021-09"
+    ],
+    "daily_threshold_ugm3": 15.0,
+    "threshold_interpretation": "WHO2021 daily benchmark applied retrospectively, not AQI, regulatory compliance, health outcomes or an annual standard.",
+    "episode_threshold_pooled_p95_ugm3": 212.77000001999912,
+    "episodes": 56,
+    "maximum_episode_days": 6,
+    "trends": [
+      {
+        "block_months": 12,
+        "status": "exploratory_conditional_interval",
+        "eligible_months": 69,
+        "candidate_contiguous_blocks": 33,
+        "slope_ugm3_per_year": 0.6765899310123713,
+        "ci95_low": -0.16616819543784725,
+        "ci95_high": 1.5330682435751768,
+        "bootstrap_replicates": 1000,
+        "seed": 20261107,
+        "interval_interpretation": "Conditional on estimated calendar-month profile and stationary block-residual approximation; six-year interval, not climate attribution or a significance test."
+      },
+      {
+        "block_months": 6,
+        "status": "exploratory_conditional_interval",
+        "eligible_months": 69,
+        "candidate_contiguous_blocks": 51,
+        "slope_ugm3_per_year": 0.6765899310123713,
+        "ci95_low": -0.5877990798838173,
+        "ci95_high": 2.027246010780129,
+        "bootstrap_replicates": 1000,
+        "seed": 20261107,
+        "interval_interpretation": "Conditional on estimated calendar-month profile and stationary block-residual approximation; six-year interval, not climate attribution or a significance test."
+      }
+    ],
+    "daily_interval_timezone_harmonized": false,
+    "season_windows": "Four:DJF/MAM/JJAS/ON. Paper-definition six-season sensitivity (not a claim about released labels):Dec16-Feb15/Feb16-Apr15/Apr16-Jun15/Jun16-Oct15/Oct16-Nov15/Nov16-Dec15. Unequal durations; counts disclosed.",
+    "causal_or_health_outcome_claims": false,
+    "weather": {
+      "name": "nasa_power_embassy_daily_2016_2021.csv",
+      "sha256": "1a7c89c03ad5a1c14fd3494833a8dc210a7b39e3285b9f41f1033f85f1c0b16d",
+      "calendar_date_overlap_days": 2192,
+      "interpretation": "Calendar labels overlap; weather days areUTC while exact embassy averaging interval is unverified. No paired weather effects estimated here."
+    }
+  },
+  "weather": {
+    "epa_sha256": "2dcafb06a204dc0c13e1b7c20eb1c37af32ceba7a63eb6e6033e751f0ee1fd43",
+    "weather_sha256": "1a7c89c03ad5a1c14fd3494833a8dc210a7b39e3285b9f41f1033f85f1c0b16d",
+    "calendar_days": 2192,
+    "observed_target_days": 2117,
+    "missing_target_days": 75,
+    "date_range": [
+      "2016-01-01",
+      "2021-12-31"
+    ],
+    "weather_units": {
+      "T2M": "degC",
+      "T2MDEW": "degC",
+      "RH2M": "percent",
+      "WS10M": "m/s",
+      "PRECTOTCORR": "mm/day",
+      "PS": "kPa"
+    },
+    "association_alignment": "weather_date = EPA nominal date + shift - lag; shifts -1/0/+1 all reported",
+    "association_adjustment": "descriptive residual correlations after calendar-month or year+calendar-month fixed effects; fit on inspected pairs, not predictive preprocessing",
+    "prediction_alignment": "nominal shift0; lag2weather PRIMARY conservative for UTC/BST daily intervals; lag1weather overlapping-day conditional benchmark only",
+    "timing_evidence": "Parent mirror cross-check supports BST-labelled EPA means in2019-Jun2020; full-record convention remains incompletely verified. NASA lag1 UTC daily interval ends06BST on targetday, after00BST nominal issue; lag2 ends06BST precedingday.",
+    "interval_timing_examples": {
+      "lag1": {
+        "weather_date": "2020-01-01",
+        "source_interval_end_utc": "2020-01-02T00:00:00+00:00",
+        "nominal_issue_bst": "2020-01-02T00:00:00+06:00",
+        "hours_after_issue": 6.0
+      },
+      "lag2": {
+        "weather_date": "2019-12-31",
+        "source_interval_end_utc": "2020-01-01T00:00:00+00:00",
+        "nominal_issue_bst": "2020-01-02T00:00:00+06:00",
+        "hours_after_issue": 0.0
+      }
+    },
+    "weather_choice": "retain T2M,RH2M,WS10M,PRECTOTCORR,PS; omit thermodynamically redundant dewpoint from ridge, show VIF for both sets",
+    "ridge_alpha": 1.0,
+    "refit": "expanding monthly; each training fold strictly before refit month; daily observed lag updates",
+    "target_imputation": false,
+    "validation": "2018-2019",
+    "retrospective_test": "2020-2021; already inspected, not untouched",
+    "uncertainty": "paired calendar moving blocks 7 and30days, seed20261107, percentile95%; no model selection",
+    "limitations": [
+      "EPA BST alignment supported by independent mirror in part of record; full-record timezone/QA not established. NASA dates UTC.",
+      "NASA POWER/MERRA2 meteorology is model-derived, not original ERA5.",
+      "Observed-data provenance does not establish independent reference-grade QA or exact daily completeness.",
+      "Actual source publication latency unverified; results are conditional hindcasts, not operational forecasts.",
+      "Lag screen exploratory and multiple comparisons uncorrected; no causal effect or optimal lag claim.",
+      "The bootstrap is descriptive conditional uncertainty for these fitted forecasts; no causal interpretation."
+    ]
+  },
+  "reference": {
+    "assumption": "Nominal release BST calendar days compared with published EPA date labels; station-day averaging timezone and original QA remain unresolved. UTC and \u00b11day sensitivity retained without choosing the best after seeing scores.",
+    "comparison_type": "Conditional paired independent-point-reference comparison; regional spatial support differs, not causal or operational validation.",
+    "primary_metrics": {
+      "n": 1752,
+      "bias": 16.150143709898778,
+      "MAE": 24.97829288828343,
+      "RMSE": 34.229553665094784,
+      "Pearson_r": 0.8972375271418193,
+      "Spearman_rho": 0.906737524684453,
+      "R2": 0.7277369374336791
+    },
+    "bootstrap": "Moving calendar blocks of7/30days; conditional sampling intervals, not measurement/model-structural uncertainty.",
+    "mirror": {
+      "raw_rows": 12777,
+      "valid_rows_before_duplicate_adjudication": 12714,
+      "conflicting_timestamp_count": 2,
+      "retained_unique_valid_hours": 12710,
+      "point": "All four conventions are sensitivity checks, not four independent stations; exact averaging convention remains a source question."
+    },
+    "source_hashes": {
+      "HyAQMet.csv": "420f59fd7e7cd527f1475b309411f27cb8ce4085490ca5daba4e1c517e0c4649",
+      "epa_observed_daily_calendar.csv": "2dcafb06a204dc0c13e1b7c20eb1c37af32ceba7a63eb6e6033e751f0ee1fd43",
+      "figshare_airnow_12cities.zip": "3a4bdf277b02710ef6405d2cc284057056f76bd3552570ee7e0afce002c2245c"
+    }
+  },
+  "reference_block_uncertainty": {
+    "7": {
+      "bias": {
+        "lower": 13.503147539233801,
+        "upper": 18.93972809885267,
+        "draws": 1000
+      },
+      "MAE": {
+        "lower": 22.792026741825982,
+        "upper": 27.151466485647557,
+        "draws": 1000
+      },
+      "RMSE": {
+        "lower": 31.280479633340644,
+        "upper": 36.98489015181477,
+        "draws": 1000
+      },
+      "Pearson_r": {
+        "lower": 0.8787014381141529,
+        "upper": 0.9140291287280727,
+        "draws": 1000
+      }
+    },
+    "30": {
+      "bias": {
+        "lower": 11.735349425216771,
+        "upper": 20.747859637336013,
+        "draws": 1000
+      },
+      "MAE": {
+        "lower": 21.45050012221176,
+        "upper": 28.94734246716927,
+        "draws": 1000
+      },
+      "RMSE": {
+        "lower": 29.853955740279098,
+        "upper": 39.119314082163385,
+        "draws": 1000
+      },
+      "Pearson_r": {
+        "lower": 0.8626448524230026,
+        "upper": 0.9206340605984572,
+        "draws": 1000
+      }
+    }
+  },
+  "sources": {
+    "epa": "https://doi.org/10.23719/1528454",
+    "nasa_power": "https://power.larc.nasa.gov/api/temporal/daily/point",
+    "nasa_request": {
+      "latitude": 23.796374,
+      "longitude": 90.424614,
+      "start": "20160101",
+      "end": "20211231",
+      "time_standard": "UTC",
+      "parameters": "T2M,T2MDEW,RH2M,WS10M,PRECTOTCORR,PS",
+      "community": "AG"
+    },
+    "hyaqmet_release": "https://doi.org/10.5281/zenodo.20705735",
+    "hyaqmet_native_repository": "https://github.com/AdityBarua10/HyAQMet",
+    "hyaqmet_native_commit": "f23ee72d6bbec8a8ab36423295e14f1b8e3d4100",
+    "airnow_mirror": "https://doi.org/10.6084/m9.figshare.12687695.v2"
+  },
+  "presentation": "Primary weather branch only in model table/figure; lag-one conditional sensitivity remains in full run.",
+  "publisher_sha256": "9a5efcc42f834a18e2af21fc34e6c2cb56de25475634be031c849f7443972ba9"
+}

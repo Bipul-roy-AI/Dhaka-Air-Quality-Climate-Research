@@ -4,7 +4,7 @@ message: >-
   Cite this repository for its computational analysis and cite the original
   datasets and HyAQMet paper separately. This research software and its reports
   are not a peer-reviewed publication.
-title: 'Dhaka air quality: reproducible seasonal analysis, reanalysis comparison and conditional prediction'
+title: 'Seasonal PM2.5 Variability, Meteorological Associations and Regional Reanalysis Agreement in Dhaka, Bangladesh'
 authors:
   - family-names: Roy
     given-names: Bipul
