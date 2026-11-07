@@ -1,4 +1,4 @@
-"""Select the manuscript's tables and figures from a completed four-track run.
+"""Select the manuscript's tables and figures from a completed observed-PM/weather study run.
 
 Usage: python scripts/publish_paper_assets.py --run artifacts/run --output artifacts/paper
 The destination must be new. No raw inputs or existing publication files change.
@@ -20,21 +20,22 @@ FILES = {
     'figures/01_seasonality.png': 'observed/observed_monthly_and_seasonal.png',
     'figures/02_trend.png': 'observed/observed_annual_and_adjusted_trend.png',
     'figures/03_weather_associations.png': 'weather/weather_correlation_heatmap.png',
-    'figures/05_reference_agreement.png': 'reference/independent_reference_comparison.png',
-    'figures/06_release_quality.png': 'hyaqmet/data_quality.png',
+    'figures/05_daily_coverage.png': 'observed/observed_daily_and_coverage.png',
+    'results/observed_summary.json': 'observed/analysis.json',
     'results/annual_pm25.csv': 'observed/annual_statistics.csv',
     'results/monthly_pm25.csv': 'observed/calendar_month_statistics.csv',
     'results/seasonal_pm25.csv': 'observed/four_season_statistics.csv',
+    'results/monthly_coverage.csv': 'observed/monthly_coverage_and_trend_inputs.csv',
+    'results/episodes.csv': 'observed/pooled_p95_episodes.csv',
     'results/trend.csv': 'observed/season_adjusted_trend_intervals.csv',
     'results/weather_correlations.csv': 'weather/associations_and_lags.csv',
-    'results/reference_metrics.csv': 'reference/reference_metrics.csv',
-    'results/reference_alignment.csv': 'reference/daily_alignment_sensitivity.csv',
-    'results/precipitation_diagnostics.csv': 'hyaqmet/annual_precipitation_diagnostic.csv',
-    'results/season_definition_comparison.csv': 'hyaqmet/released_vs_paper_season_counts.csv',
-    'results/merra_vif_candidates.csv': 'hyaqmet/merra_26_candidate_vif.csv',
-    'results/merra_vif_retained.csv': 'hyaqmet/merra_vif_diagnostic.csv',
-    'results/quality_checks.json': 'hyaqmet/quality_and_provenance.json',
+    'results/weather_vif.csv': 'weather/weather_vif.csv',
 }
+OPTIONAL_FILES = {
+    'results/six_season_sensitivity.csv': 'observed/six_season_sensitivity.csv',
+    'results/six_season_release_sensitivity.csv': 'observed/six_season_release_sensitivity.csv',
+}
+
 PRIMARY_MODELS = {
     'persistence': 'Previous-day\npersistence',
     'calendar_month_climatology': 'Calendar\nclimatology',
@@ -46,30 +47,34 @@ PRIMARY_MODELS = {
 
 def publish(run, out):
     manifest = json.loads((run / 'RUN_COMPLETE.json').read_text())
-    if manifest['status'] != 'all_four_tracks_completed':
-        raise ValueError('All four analysis tracks must finish before publication')
+    if manifest['status'] != 'all_study_tracks_completed':
+        raise ValueError('The observed-PM/weather study run must finish before publication')
+    tracks = [record['track'] for record in manifest['analyses']]
+    if len(tracks) != len(set(tracks)) or not {'observed', 'weather'}.issubset(tracks) or not set(tracks).issubset({'observed', 'weather', 'station_day'}):
+        raise ValueError('Unexpected or missing study analysis tracks')
+    if any(record['status'] != 'completed' for record in manifest['analyses']):
+        raise ValueError('Every declared study track must be completed')
+    if ('mirror' in manifest['input_sha256']) != ('station_day' in tracks):
+        raise ValueError('Station-day track and mirror input must agree')
     for target, source in FILES.items():
         destination = out / target
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(run / source, destination)
+    for target, source in OPTIONAL_FILES.items():
+        if (run / source).is_file():
+            shutil.copyfile(run / source, out / target)
+    if 'station_day' in tracks:
+        shutil.copyfile(run / 'station_day/station_day_sensitivity.csv', out / 'results/station_day_sensitivity.csv')
     metrics = pd.read_csv(run / 'weather/daily_metrics.csv')
     metrics = metrics.loc[metrics.model.isin(PRIMARY_MODELS)].copy()
     metrics.to_csv(out / 'results/models.csv', index=False)
     increment = pd.read_csv(run / 'weather/weather_increment_uncertainty.csv')
     increment.loc[increment.weather_model.eq('ridge_calendar_lags_weather_safe2')].to_csv(
         out / 'results/weather_increment.csv', index=False)
-    for definition, filename in [
-        ('paper', 'pollutant_paper_table3_season_sensitivity.csv'),
-        ('release', 'pollutant_notebook_season_sensitivity.csv'),
-    ]:
-        frame = pd.read_csv(run / 'hyaqmet' / filename, header=[0, 1], index_col=0)
-        frame.columns = ['_'.join(column) for column in frame.columns]
-        frame.index.name = 'season'
-        frame.to_csv(out / f'results/seasonal_{definition}_definition.csv')
     common = metrics.loc[
         metrics.period.eq('retrospective_test_2020_2021') & metrics.sample_set.eq('common_cases')
     ].set_index('model').loc[list(PRIMARY_MODELS)]
-    if len(common) != 5 or common.n.nunique() != 1:
+    if len(common) != 5 or common.n.nunique() != 1 or common.n.iloc[0] <= 0:
         raise ValueError('Primary comparison requires five models on identical cases')
     fig, axes = plt.subplots(1, 2, figsize=(11, 4.7), sharey=True)
     colors = ['#8498ab', '#a9b5c2', '#c3ccd4', '#3182a0', '#087f8c']
@@ -81,7 +86,10 @@ def publish(run, out):
         ax.spines[['top', 'right']].set_visible(False)
     axes[0].invert_yaxis()
     fig.suptitle(f'Retrospective prediction, 2020–2021: {int(common.n.iloc[0])} common days')
-    fig.text(.5, .01, 'Conditional hindcasts; the incremental weather-skill interval spans zero.', ha='center', fontsize=9)
+    primary_interval = increment.loc[increment.weather_model.eq('ridge_calendar_lags_weather_safe2') & increment.period.eq('retrospective_test_2020_2021') & increment.block_days.eq(30) & increment.metric.eq('RMSE')]
+    interval_spans_zero = len(primary_interval) == 1 and primary_interval.ci95_lower.iloc[0] <= 0 <= primary_interval.ci95_upper.iloc[0]
+    note = ('Conditional hindcasts; the incremental weather-skill interval spans zero.' if interval_spans_zero else 'Conditional hindcasts; source publication timing remains unverified.')
+    fig.text(.5, .01, note, ha='center', fontsize=9)
     fig.tight_layout(rect=(0, .04, 1, .94))
     fig.savefig(out / 'figures/04_prediction.png', dpi=200)
     plt.close(fig)
@@ -89,22 +97,19 @@ def publish(run, out):
         'run': manifest,
         'observed': json.loads((run / 'observed/analysis.json').read_text()),
         'weather': json.loads((run / 'weather/methods.json').read_text()),
-        'reference': json.loads((run / 'reference/analysis_manifest.json').read_text()),
-        'reference_block_uncertainty': json.loads((run / 'reference/block_uncertainty.json').read_text()),
         'sources': {
             'epa': 'https://doi.org/10.23719/1528454',
             'nasa_power': 'https://power.larc.nasa.gov/api/temporal/daily/point',
             'nasa_request': {'latitude': 23.796374, 'longitude': 90.424614,
                              'start': '20160101', 'end': '20211231', 'time_standard': 'UTC',
                              'parameters': 'T2M,T2MDEW,RH2M,WS10M,PRECTOTCORR,PS', 'community': 'AG'},
-            'hyaqmet_release': 'https://doi.org/10.5281/zenodo.20705735',
-            'hyaqmet_native_repository': 'https://github.com/AdityBarua10/HyAQMet',
-            'hyaqmet_native_commit': 'f23ee72d6bbec8a8ab36423295e14f1b8e3d4100',
-            'airnow_mirror': 'https://doi.org/10.6084/m9.figshare.12687695.v2',
         },
         'presentation': 'Primary weather branch only in model table/figure; lag-one conditional sensitivity remains in full run.',
         'publisher_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
     }
+    if 'station_day' in tracks:
+        provenance['station_day'] = json.loads((run / 'station_day/analysis.json').read_text())
+        provenance['sources']['airnow_mirror'] = 'https://doi.org/10.6084/m9.figshare.12687695.v2'
     (out / 'results/provenance.json').write_text(json.dumps(provenance, indent=2) + '\n')
 
 

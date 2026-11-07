@@ -1,6 +1,6 @@
-# Reproduce the paper and published assets
+# Reproduce the study and published assets
 
-Run from the repository root in a fresh checkout. Python 3.12 and [uv](https://docs.astral.sh/uv/) are required. The checked-in `requirements.lock` pins dependencies and hashes; do not install the former editable package.
+Run from the repository root in a fresh checkout. Python 3.12 and [uv](https://docs.astral.sh/uv/) are required. Install the checked-in hash-pinned environment:
 
 ```bash
 uv venv --python 3.12 .venv
@@ -18,30 +18,24 @@ python -m unittest discover -s tests -v
 uv pip compile requirements.in --python-version 3.12 --generate-hashes -o requirements.lock
 ```
 
-## Acquire and inspect the inputs
+## Acquire and inspect the study inputs
 
-Downloads require network access but no API keys. TLS and inspected release checksums remain enabled. The commands below use new output paths and refuse to overwrite existing source exports. Preserve their manifests. If a checksum changes, investigate the changed source rather than bypassing verification.
+Downloads require network access but no API keys. TLS and inspected checksums remain enabled. These commands use new output paths and preserve original exports. Investigate a changed checksum rather than bypassing verification.
 
 ```bash
 python scripts/fetch_public_sources.py --output artifacts/reproduce_sources
 python scripts/inspect_public_sources.py \
   --sources artifacts/reproduce_sources --output artifacts/reproduce_normalized
-python scripts/fetch_hyaqmet_release.py --output artifacts/reproduce_release
-
-git clone https://github.com/AdityBarua10/HyAQMet.git artifacts/reproduce_native
-git -C artifacts/reproduce_native checkout --detach f23ee72d6bbec8a8ab36423295e14f1b8e3d4100
 ```
 
-The source fetch retrieves the EPA observed-data workbook, Figshare/AirNow mirror ZIP and NASA POWER meteorology for2016–2021. The normalizer extracts observed EPA concentrations only, preserves missing days and checks NASA units/UTC dates. The release fetch verifies the inspected Zenodo HyAQMet archive and extracts its CSV/README. Native source comparisons use the pinned GitHub checkout's `data/` directory, not an unpinned branch tip. NASA POWER is newly acquired model-derived weather, not the legacy climate table.
+The fetch retrieves the EPA observed-data workbook, Figshare/AirNow hourly mirror ZIP and NASA POWER meteorology for2016–2021. The normalizer extracts observed EPA concentrations, preserves missing days, and checks NASA units/UTC dates. Preserve the download/inspection manifests. NASA POWER is model-derived meteorology, not the earlier climate table or another observed pollution target. The hourly mirror checks averaging conventions for the same station; it is not an independent second monitoring site.
 
-## Run all four analysis tracks
+## Run the observed-PM and weather analyses
 
-Use a fresh run directory. Include the mirror ZIP to reproduce the paper's station-day/timezone sensitivity checks; the runner also permits omission for a reduced analysis, which is not the complete paper reproduction.
+Choose a fresh run directory. Include the mirror ZIP to reproduce the station-day sensitivity in the manuscript. Omitting `--mirror` runs the two principal analyses without that optional diagnostic.
 
 ```bash
 python scripts/run_paper_style_analysis.py \
-  --release artifacts/reproduce_release/HyAQMet.csv \
-  --hyaqmet-source-dir artifacts/reproduce_native/data \
   --epa artifacts/reproduce_normalized/epa_observed_daily_calendar.csv \
   --weather artifacts/reproduce_normalized/nasa_power_embassy_daily_2016_2021.csv \
   --mirror artifacts/reproduce_sources/figshare_airnow_12cities.zip \
@@ -50,25 +44,24 @@ python scripts/run_paper_style_analysis.py \
 
 | Run subdirectory | Script | Scope |
 |---|---|---|
-| `hyaqmet/` | `analyze_hyaqmet.py` | Released-data QA, climatology, native-source comparisons, VIF and BLH associations |
-| `observed/` | `analyze_observed_reference.py` | Observed EPA coverage, temporal structure, trend/episode and weather-context diagnostics |
-| `weather/` | `analyze_observed_weather.py` | Calendar-adjusted weather associations, date/lag sensitivities and bounded retrospective prediction |
-| `reference/` | `validate_hyaqmet_reference.py` | Paired reanalysis–observed comparisons and independent hourly-mirror date sensitivities |
+| `observed/` | `analyze_observed_reference.py` | Observed EPA coverage, seasonality, trend, episodes and weather-context diagnostics |
+| `weather/` | `analyze_observed_weather.py` | Calendar-adjusted associations, date/lag sensitivities and bounded retrospective prediction |
+| `station_day/` | `inspect_station_day.py` | Optional hourly-mirror daily averaging/timezone sensitivity |
 
-`RUN_COMPLETE.json` appears only after all four subprocesses succeed and records input/script hashes. Per-track CSVs, figures, methods and findings retain their own interpretation limits. Calendar months are primary; the paper Table 3 and notebook/released season definitions are both reported as sensitivities, not silently substituted or chosen by favorable results.
+`RUN_COMPLETE.json` appears only after all requested subprocesses succeed and the input hashes remain unchanged. It records input/script hashes. Per-track tables, figures and findings retain their interpretation limits. Calendar months are primary; the four-season and both explicitly defined six-season windows are sensitivity summaries with unequal durations and disclosed coverage.
 
-All prediction results are retrospective. The primary weather extension uses conservative lag-2 UTC weather; lag-1 weather is a separately labelled overlapping-day conditional benchmark. Missing observed targets are never imputed for scoring. Daily averaging QA, full-record timezone conventions and publication latency remain incompletely verified. These analyses do not certify operational forecasting, causality, health effects or independent accuracy of every reanalysis field.
+Prediction results are retrospective. The primary weather extension uses conservative lag-2 UTC weather; lag-1 weather is a separately labelled overlapping-day conditional benchmark. Observed scoring targets are never imputed. Full-record daily QA, averaging conventions and publication latency remain incompletely verified. The analyses do not certify operational forecasting, causal meteorological effects or health outcomes.
 
-## Publish the curated assets
+## Stage the manuscript assets and rebuild the PDF
 
-The publisher reads one completed four-track run and stages selected figures/results in a **new** directory. It does not publish to GitHub or overwrite the paper's checked-in assets.
+The publisher reads a completed study run and writes selected figures/results into a **new** directory. It neither publishes to GitHub nor overwrites checked-in assets.
 
 ```bash
 python scripts/publish_paper_assets.py \
   --run artifacts/reproduce_run --output artifacts/reproduce_assets
 ```
 
-Inspect the staged files and manifest before deliberately refreshing the checked-in assets. The following commands **replace** curated figures/results and rebuild the PDF from the root manuscript. PDF generation additionally requires Pandoc, XeLaTeX and the DejaVu Serif/DejaVu Sans Mono fonts; they are outside the Python lock.
+Inspect the staged tables, figures and provenance first. The next commands deliberately **replace** curated assets and rebuild the PDF from the root manuscript. PDF generation additionally requires Pandoc, XeLaTeX and DejaVu Serif/DejaVu Sans Mono fonts; these are outside the Python lock.
 
 ```bash
 cp artifacts/reproduce_assets/figures/* figures/
@@ -78,13 +71,13 @@ pandoc README.md --standalone --pdf-engine=xelatex \
   -V geometry:margin=0.8in -V fontsize=10pt -o paper.pdf
 ```
 
-Exact image/PDF bytes can vary with graphics or document toolchains; compare numerical tables, input hashes, case counts and scientific conclusions. The analysis runner and asset publisher do not themselves build the PDF.
+The publisher includes the five primary prediction models; the overlapping-day lag-1 benchmark stays in the full run. Optional station-day and six-season tables are staged when present. Exact image/PDF bytes can vary with graphics/document toolchains; compare input hashes, numerical tables, case counts and conclusions.
 
-## Repository layout and history
+## Layout and history
 
-- `README.md`: manuscript and headline results; `paper.pdf`: its generated PDF.
-- `figures/`, `results/`: curated published assets; `scripts/`, `tests/`: reproducible code and scientific checks.
-- `requirements.in`, `requirements.lock`: declared and hash-pinned Python environment.
-- `artifacts/`: ignored acquisitions, native checkout and complete run outputs; not committed source data.
+- `README.md`: manuscript; `paper.pdf`: generated PDF.
+- `figures/`, `results/`: curated assets; `scripts/`, `tests/`: analysis code and scientific checks.
+- `requirements.in`, `requirements.lock`: declared and hash-pinned Python dependencies.
+- `artifacts/`: ignored source acquisitions and complete run outputs; not committed input data.
 
-Older phase folders, the former package and historical audit material are recoverable from Git commit `273f9aae0b2e93c8e15c5ea1613112e8559f3671`. They are not inputs to this reproduction. No uploaded mixed-provenance historical archive is required for these four tracks.
+Older phase folders/package/audit material remain recoverable from Git commit `273f9aae0b2e93c8e15c5ea1613112e8559f3671`. They are not inputs to this study reproduction; the mixed-provenance uploaded archive is not required. [DATA_SELECTION.md](DATA_SELECTION.md) documents the retained findings and exclusions. The fixed `results/archive_source_audit.json` snapshot is historical exclusion evidence, preserved separately from the outputs generated by this runner.

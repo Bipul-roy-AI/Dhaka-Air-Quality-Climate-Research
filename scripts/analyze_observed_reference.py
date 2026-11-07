@@ -18,7 +18,6 @@ from scipy.stats import theilslopes
 
 THRESHOLD = 15.0  # WHO 2021 daily guideline used retrospectively, not AQI.
 FOUR_ORDER = ["Winter_DJF", "Pre_monsoon_MAM", "Monsoon_JJAS", "Post_monsoon_ON"]
-SIX_ORDER = ["Winter", "Spring", "Summer", "Monsoon", "Autumn", "Late_autumn"]
 
 
 def four_season(date: pd.Timestamp) -> str:
@@ -32,7 +31,7 @@ def four_season(date: pd.Timestamp) -> str:
 
 
 def six_season(date: pd.Timestamp) -> str:
-    """Exact date boundaries from HyAQMet paper Table 3, not equal-length bins."""
+    """Published six-season date windows; these are unequal in duration."""
     md = date.month * 100 + date.day
     if md >= 1216 or md <= 215:
         return "Winter"
@@ -43,6 +42,22 @@ def six_season(date: pd.Timestamp) -> str:
     if md <= 1015:
         return "Monsoon"
     if md <= 1115:
+        return "Autumn"
+    return "Late_autumn"
+
+
+def six_season_release(date: pd.Timestamp) -> str:
+    """Alternative two-month date windows, kept as a separate sensitivity."""
+    md = date.month * 100 + date.day
+    if md >= 1215 or md < 215:
+        return "Winter"
+    if md < 415:
+        return "Spring"
+    if md < 615:
+        return "Summer"
+    if md < 815:
+        return "Monsoon"
+    if md < 1015:
         return "Autumn"
     return "Late_autumn"
 
@@ -211,6 +226,7 @@ def run(input_path: Path, output: Path, weather_path: Path | None = None, replic
     months = grouped_summary(series, series.index.month, "month")
     seasons = grouped_summary(series, series.index.map(four_season), "season")
     six = grouped_summary(series, series.index.map(six_season), "season")
+    six_release = grouped_summary(series, series.index.map(six_season_release), "season")
     monthly = monthly_targets(series)
     means = monthly.loc[monthly.eligible].groupby(monthly.loc[monthly.eligible].index.month).mean_ugm3.mean()
     months["year_balanced_mean_ugm3"] = months.month.map(means)
@@ -226,7 +242,7 @@ def run(input_path: Path, output: Path, weather_path: Path | None = None, replic
                 "episode_threshold_pooled_p95_ugm3": float(series.quantile(.95)), "episodes": len(episodes),
                 "maximum_episode_days": int(episodes.duration_days.max()) if len(episodes) else 0,
                 "trends": trends, "daily_interval_timezone_harmonized": False,
-                "season_windows": "Four:DJF/MAM/JJAS/ON. Paper-definition six-season sensitivity (not a claim about released labels):Dec16-Feb15/Feb16-Apr15/Apr16-Jun15/Jun16-Oct15/Oct16-Nov15/Nov16-Dec15. Unequal durations; counts disclosed.",
+                "season_windows": "Primary:calendar months; four seasons DJF/MAM/JJAS/ON. Published-date sensitivity:Dec16-Feb15/Feb16-Apr15/Apr16-Jun15/Jun16-Oct15/Oct16-Nov15/Nov16-Dec15. Alternative two-month sensitivity:Dec15-Feb14/Feb15-Apr14/Apr15-Jun14/Jun15-Aug14/Aug15-Oct14/Oct15-Dec14. Unequal durations and counts disclosed; neither calendar replaces the primary summaries.",
                 "causal_or_health_outcome_claims": False}
     weather = None
     if weather_path is not None:
@@ -246,6 +262,7 @@ def run(input_path: Path, output: Path, weather_path: Path | None = None, replic
     monthly.to_csv(output/"monthly_coverage_and_trend_inputs.csv", index_label="date")
     seasons.to_csv(output/"four_season_statistics.csv", index=False)
     six.to_csv(output/"six_season_sensitivity.csv", index=False)
+    six_release.to_csv(output/"six_season_release_sensitivity.csv", index=False)
     episodes.to_csv(output/"pooled_p95_episodes.csv", index=False)
     pd.DataFrame(trends).to_csv(output/"season_adjusted_trend_intervals.csv", index=False)
     if weather is not None:weather.to_csv(output/"weather_coverage.csv", index=False)
@@ -268,7 +285,7 @@ Source: supplied EPA-hosted embassy daily calendar, {metadata['first_date']}–{
 
 ## Methods and interpretation
 
-Annual/month/season tables use available daily values and report observed/missing denominators. The month plot additionally shows equal-year means of eligible monthly means to expose coverage/weighting sensitivity. Four seasons areDJF/MAM/JJAS/ON; these windows have3/3/4/2months. The exact paperTable3six-season boundaries are a paper-definition sensitivity analysis, also unequal in duration; this does not assert agreement with the final release's season labels. Calendar-month summaries are primary. Seasons are pooled; no independent equal-length seasonal replicates are implied.
+Annual/month/season tables use available daily values and report observed/missing denominators. The month plot additionally shows equal-year means of eligible monthly means to expose coverage/weighting sensitivity. Four seasons areDJF/MAM/JJAS/ON; these windows have3/3/4/2months. The published-date six-season calendar and alternative two-month calendar are separate sensitivities, both applied to this observed record. Their exact windows are recorded in analysis.json. Calendar-month summaries are primary. Seasons are pooled; no independent equal-length seasonal replicates are implied.
 
 Trend inputs are monthly daily-mean concentrations with≥75%coverage. Subtract the median eligible monthly mean for each calendar month. FitTheil–Sen slope to the residual versus actual elapsed calendar months/12. For uncertainty, center residuals around the fitted trend, sample moving blocks of12months (and6for sensitivity) only from completely eligible contiguous calendar windows, concatenate draws, and place residuals on the original eligible observation times. Refit slope for1000replicates unless CLI override is used. This preserves within-block dependence without bridging excluded months. Intervals assume approximately stationary residuals and hold the estimated seasonal profile fixed; they do not propagate all seasonal-estimation, missingness, source QA, endpoint or monitor-interval uncertainty. Coverage≥75%does not guarantee unbiased missingness. No iid Mann–Kendall p-value or independent-row CI is claimed.
 

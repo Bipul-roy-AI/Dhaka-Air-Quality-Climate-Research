@@ -1,0 +1,69 @@
+{
+  "input_sha256": "2dcafb06a204dc0c13e1b7c20eb1c37af32ceba7a63eb6e6033e751f0ee1fd43",
+  "input_name": "epa_observed_daily_calendar.csv",
+  "first_date": "2016-01-01",
+  "last_date": "2021-12-31",
+  "overall": {
+    "calendar_days": 2192,
+    "observed_days": 2117,
+    "missing_days": 75,
+    "coverage_fraction": 0.9657846715328468,
+    "mean_ugm3": 87.18110746585016,
+    "median_ugm3": 60.70833333,
+    "std_ugm3": 65.04398514408709,
+    "p05_ugm3": 19.909523806000003,
+    "p25_ugm3": 35.41666667,
+    "p75_ugm3": 130.875,
+    "p95_ugm3": 212.77000001999912,
+    "max_ugm3": 340.7916667,
+    "days_gt_15": 2068,
+    "fraction_observed_gt_15": 0.9768540387340576
+  },
+  "minimum_monthly_coverage": 0.75,
+  "eligible_months": 69,
+  "excluded_months": [
+    "2018-04",
+    "2020-05",
+    "2021-09"
+  ],
+  "daily_threshold_ugm3": 15.0,
+  "threshold_interpretation": "WHO2021 daily benchmark applied retrospectively, not AQI, regulatory compliance, health outcomes or an annual standard.",
+  "episode_threshold_pooled_p95_ugm3": 212.77000001999912,
+  "episodes": 56,
+  "maximum_episode_days": 6,
+  "trends": [
+    {
+      "block_months": 12,
+      "status": "exploratory_conditional_interval",
+      "eligible_months": 69,
+      "candidate_contiguous_blocks": 33,
+      "slope_ugm3_per_year": 0.6765899310123713,
+      "ci95_low": -0.16616819543784725,
+      "ci95_high": 1.5330682435751768,
+      "bootstrap_replicates": 1000,
+      "seed": 20261107,
+      "interval_interpretation": "Conditional on estimated calendar-month profile and stationary block-residual approximation; six-year interval, not climate attribution or a significance test."
+    },
+    {
+      "block_months": 6,
+      "status": "exploratory_conditional_interval",
+      "eligible_months": 69,
+      "candidate_contiguous_blocks": 51,
+      "slope_ugm3_per_year": 0.6765899310123713,
+      "ci95_low": -0.5877990798838173,
+      "ci95_high": 2.027246010780129,
+      "bootstrap_replicates": 1000,
+      "seed": 20261107,
+      "interval_interpretation": "Conditional on estimated calendar-month profile and stationary block-residual approximation; six-year interval, not climate attribution or a significance test."
+    }
+  ],
+  "daily_interval_timezone_harmonized": false,
+  "season_windows": "Primary:calendar months; four seasons DJF/MAM/JJAS/ON. Published-date sensitivity:Dec16-Feb15/Feb16-Apr15/Apr16-Jun15/Jun16-Oct15/Oct16-Nov15/Nov16-Dec15. Alternative two-month sensitivity:Dec15-Feb14/Feb15-Apr14/Apr15-Jun14/Jun15-Aug14/Aug15-Oct14/Oct15-Dec14. Unequal durations and counts disclosed; neither calendar replaces the primary summaries.",
+  "causal_or_health_outcome_claims": false,
+  "weather": {
+    "name": "nasa_power_embassy_daily_2016_2021.csv",
+    "sha256": "1a7c89c03ad5a1c14fd3494833a8dc210a7b39e3285b9f41f1033f85f1c0b16d",
+    "calendar_date_overlap_days": 2192,
+    "interpretation": "Calendar labels overlap; weather days areUTC while exact embassy averaging interval is unverified. No paired weather effects estimated here."
+  }
+}

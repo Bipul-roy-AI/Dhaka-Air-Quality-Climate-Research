@@ -1,18 +1,11 @@
 {
   "run": {
-    "status": "all_four_tracks_completed",
+    "status": "all_study_tracks_completed",
     "analyses": [
-      {
-        "track": "hyaqmet",
-        "script": "analyze_hyaqmet.py",
-        "script_sha256": "bfbfb8cbd846f8e5a02c14e35953205a252d597883649c61ffe372c060a0b60e",
-        "output": "hyaqmet",
-        "status": "completed"
-      },
       {
         "track": "observed",
         "script": "analyze_observed_reference.py",
-        "script_sha256": "eb5835768749dbe6bd2aa7d424d21cc8bbfafd7457917fd0a3e5fd0bf01df239",
+        "script_sha256": "4de3b6ca9bd9387b6f80cb4ed11f6ca54d148ab9af226de81dce4550cb8b5e91",
         "output": "observed",
         "status": "completed"
       },
@@ -24,21 +17,21 @@
         "status": "completed"
       },
       {
-        "track": "reference",
-        "script": "validate_hyaqmet_reference.py",
-        "script_sha256": "84e9b98f70419b15dbec2f67b6fcc7bb32af875cb01aeb3600e554790a86b327",
-        "output": "reference",
+        "track": "station_day",
+        "script": "inspect_station_day.py",
+        "script_sha256": "e1ac0da8c5f60fd9a86fecb700d2cf1ccd4751a6ad07d8f739c1077a2593663d",
+        "output": "station_day",
         "status": "completed"
       }
     ],
     "input_sha256": {
-      "release": "420f59fd7e7cd527f1475b309411f27cb8ce4085490ca5daba4e1c517e0c4649",
       "epa": "2dcafb06a204dc0c13e1b7c20eb1c37af32ceba7a63eb6e6033e751f0ee1fd43",
       "weather": "1a7c89c03ad5a1c14fd3494833a8dc210a7b39e3285b9f41f1033f85f1c0b16d",
       "mirror": "3a4bdf277b02710ef6405d2cc284057056f76bd3552570ee7e0afce002c2245c"
     },
     "input_files_modified": false,
-    "all_results": "conditional/retrospective as detailed in per-track methods; not operational/causal certification"
+    "study_scope": "Observed Embassy PM2.5 and NASA POWER weather; optional station-day interval sensitivity",
+    "all_results": "Conditional/retrospective as detailed per track; not operational or causal certification"
   },
   "observed": {
     "input_sha256": "2dcafb06a204dc0c13e1b7c20eb1c37af32ceba7a63eb6e6033e751f0ee1fd43",
@@ -100,7 +93,7 @@
       }
     ],
     "daily_interval_timezone_harmonized": false,
-    "season_windows": "Four:DJF/MAM/JJAS/ON. Paper-definition six-season sensitivity (not a claim about released labels):Dec16-Feb15/Feb16-Apr15/Apr16-Jun15/Jun16-Oct15/Oct16-Nov15/Nov16-Dec15. Unequal durations; counts disclosed.",
+    "season_windows": "Primary:calendar months; four seasons DJF/MAM/JJAS/ON. Published-date sensitivity:Dec16-Feb15/Feb16-Apr15/Apr16-Jun15/Jun16-Oct15/Oct16-Nov15/Nov16-Dec15. Alternative two-month sensitivity:Dec15-Feb14/Feb15-Apr14/Apr15-Jun14/Jun15-Aug14/Aug15-Oct14/Oct15-Dec14. Unequal durations and counts disclosed; neither calendar replaces the primary summaries.",
     "causal_or_health_outcome_claims": false,
     "weather": {
       "name": "nasa_power_embassy_daily_2016_2021.csv",
@@ -161,78 +154,6 @@
       "The bootstrap is descriptive conditional uncertainty for these fitted forecasts; no causal interpretation."
     ]
   },
-  "reference": {
-    "assumption": "Nominal release BST calendar days compared with published EPA date labels; station-day averaging timezone and original QA remain unresolved. UTC and \u00b11day sensitivity retained without choosing the best after seeing scores.",
-    "comparison_type": "Conditional paired independent-point-reference comparison; regional spatial support differs, not causal or operational validation.",
-    "primary_metrics": {
-      "n": 1752,
-      "bias": 16.150143709898778,
-      "MAE": 24.97829288828343,
-      "RMSE": 34.229553665094784,
-      "Pearson_r": 0.8972375271418193,
-      "Spearman_rho": 0.906737524684453,
-      "R2": 0.7277369374336791
-    },
-    "bootstrap": "Moving calendar blocks of7/30days; conditional sampling intervals, not measurement/model-structural uncertainty.",
-    "mirror": {
-      "raw_rows": 12777,
-      "valid_rows_before_duplicate_adjudication": 12714,
-      "conflicting_timestamp_count": 2,
-      "retained_unique_valid_hours": 12710,
-      "point": "All four conventions are sensitivity checks, not four independent stations; exact averaging convention remains a source question."
-    },
-    "source_hashes": {
-      "HyAQMet.csv": "420f59fd7e7cd527f1475b309411f27cb8ce4085490ca5daba4e1c517e0c4649",
-      "epa_observed_daily_calendar.csv": "2dcafb06a204dc0c13e1b7c20eb1c37af32ceba7a63eb6e6033e751f0ee1fd43",
-      "figshare_airnow_12cities.zip": "3a4bdf277b02710ef6405d2cc284057056f76bd3552570ee7e0afce002c2245c"
-    }
-  },
-  "reference_block_uncertainty": {
-    "7": {
-      "bias": {
-        "lower": 13.503147539233801,
-        "upper": 18.93972809885267,
-        "draws": 1000
-      },
-      "MAE": {
-        "lower": 22.792026741825982,
-        "upper": 27.151466485647557,
-        "draws": 1000
-      },
-      "RMSE": {
-        "lower": 31.280479633340644,
-        "upper": 36.98489015181477,
-        "draws": 1000
-      },
-      "Pearson_r": {
-        "lower": 0.8787014381141529,
-        "upper": 0.9140291287280727,
-        "draws": 1000
-      }
-    },
-    "30": {
-      "bias": {
-        "lower": 11.735349425216771,
-        "upper": 20.747859637336013,
-        "draws": 1000
-      },
-      "MAE": {
-        "lower": 21.45050012221176,
-        "upper": 28.94734246716927,
-        "draws": 1000
-      },
-      "RMSE": {
-        "lower": 29.853955740279098,
-        "upper": 39.119314082163385,
-        "draws": 1000
-      },
-      "Pearson_r": {
-        "lower": 0.8626448524230026,
-        "upper": 0.9206340605984572,
-        "draws": 1000
-      }
-    }
-  },
   "sources": {
     "epa": "https://doi.org/10.23719/1528454",
     "nasa_power": "https://power.larc.nasa.gov/api/temporal/daily/point",
@@ -245,11 +166,73 @@
       "parameters": "T2M,T2MDEW,RH2M,WS10M,PRECTOTCORR,PS",
       "community": "AG"
     },
-    "hyaqmet_release": "https://doi.org/10.5281/zenodo.20705735",
-    "hyaqmet_native_repository": "https://github.com/AdityBarua10/HyAQMet",
-    "hyaqmet_native_commit": "f23ee72d6bbec8a8ab36423295e14f1b8e3d4100",
     "airnow_mirror": "https://doi.org/10.6084/m9.figshare.12687695.v2"
   },
   "presentation": "Primary weather branch only in model table/figure; lag-one conditional sensitivity remains in full run.",
-  "publisher_sha256": "9a5efcc42f834a18e2af21fc34e6c2cb56de25475634be031c849f7443972ba9"
+  "publisher_sha256": "63aa5581161714c8b740d5a371eea8c1c4c9bcda0796756d4f675c5082bd2754",
+  "station_day": {
+    "purpose": "Station-day identity/alignment sensitivity within the embassy monitoring network, not independent-site validation",
+    "epa_calendar_days": 2192,
+    "epa_nonmissing_days": 2117,
+    "mirror_QC": {
+      "archive_member": "PM2.5_data/dhaka.csv",
+      "raw_rows": 12777,
+      "valid_rows_before_duplicate_adjudication": 12714,
+      "rejection_counts_nonexclusive": {
+        "QC_not_Valid": 59,
+        "unit_not_UG_M3": 0,
+        "duration_not_1_Hr": 0,
+        "missing_nonfinite_or_negative_concentration": 47,
+        "invalid_or_nonhourly_timestamp": 0
+      },
+      "duplicate_valid_timestamp_value_pairs_removed": 0,
+      "conflicting_timestamp_count": 2,
+      "conflicting_unique_measurement_rows_excluded": 4,
+      "retained_unique_valid_hours": 12710,
+      "min_hours_per_day": 18,
+      "daily_coverage_by_convention": {
+        "local_labels": {
+          "calendar_days": 546,
+          "eligible_days": 530,
+          "under_18_or_requested_hours": 16
+        },
+        "local_hour_ending": {
+          "calendar_days": 545,
+          "eligible_days": 530,
+          "under_18_or_requested_hours": 15
+        },
+        "UTC_labels": {
+          "calendar_days": 546,
+          "eligible_days": 531,
+          "under_18_or_requested_hours": 15
+        },
+        "UTC_hour_ending": {
+          "calendar_days": 546,
+          "eligible_days": 531,
+          "under_18_or_requested_hours": 15
+        }
+      },
+      "convention_hour_shifts": {
+        "local_labels": 0,
+        "local_hour_ending": -1,
+        "UTC_labels": -6,
+        "UTC_hour_ending": -7
+      },
+      "concentration_unit_filter": "UG/M3",
+      "value_column": "Raw Conc. (not AQI or NowCast)",
+      "interpretation": "Four averaging-label hypotheses for the same monitoring series; not four independent stations or independent source validations.",
+      "full_original_record_QA_verified": false,
+      "station_day_averaging_convention_verified": false
+    },
+    "comparison_tolerance_ugm3": 0.0001,
+    "bias_definition": "Mirror daily mean minus EPA-hosted daily mean",
+    "no_best_alignment_selected": true,
+    "full_record_QA_verified": false,
+    "averaging_convention_verified": false,
+    "source_sha256": {
+      "epa_observed_daily_calendar.csv": "2dcafb06a204dc0c13e1b7c20eb1c37af32ceba7a63eb6e6033e751f0ee1fd43",
+      "figshare_airnow_12cities.zip": "3a4bdf277b02710ef6405d2cc284057056f76bd3552570ee7e0afce002c2245c"
+    },
+    "script_sha256": "e1ac0da8c5f60fd9a86fecb700d2cf1ccd4751a6ad07d8f739c1077a2593663d"
+  }
 }
