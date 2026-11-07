@@ -1,0 +1,69 @@
+{
+  "provider": "NASA POWER",
+  "request_url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2MDEW%2CRH2M%2CWS10M%2CPRECTOTCORR%2CPS&community=AG&longitude=90.424614&latitude=23.796374&start=20160101&end=20211231&format=JSON&time-standard=UTC",
+  "sha256": "cd1da339c942fbf6f76a81ca924d7f7b175df1e0011d88b19ef5e86628daa912",
+  "station_coordinates_source": "Official AirNow Dhaka DK1010001 metadata; point coordinates do not change native meteorological grid support",
+  "requested_coordinates": [
+    23.796374,
+    90.424614
+  ],
+  "response_geometry": {
+    "type": "Point",
+    "coordinates": [
+      90.425,
+      23.796,
+      10.06
+    ]
+  },
+  "sources": [
+    "MERRA2",
+    "POWER"
+  ],
+  "time_standard": "UTC",
+  "parameters": {
+    "T2M": {
+      "units": "C",
+      "longname": "Temperature at 2 Meters"
+    },
+    "T2MDEW": {
+      "units": "C",
+      "longname": "Dew/Frost Point at 2 Meters"
+    },
+    "RH2M": {
+      "units": "%",
+      "longname": "Relative Humidity at 2 Meters"
+    },
+    "WS10M": {
+      "units": "m/s",
+      "longname": "Wind Speed at 10 Meters"
+    },
+    "PRECTOTCORR": {
+      "units": "mm/day",
+      "longname": "Precipitation Corrected"
+    },
+    "PS": {
+      "units": "kPa",
+      "longname": "Surface Pressure"
+    }
+  },
+  "n_days_per_parameter": {
+    "T2M": 2192,
+    "T2MDEW": 2192,
+    "RH2M": 2192,
+    "WS10M": 2192,
+    "PRECTOTCORR": 2192,
+    "PS": 2192
+  },
+  "fill_counts": {
+    "T2M": 0,
+    "T2MDEW": 0,
+    "RH2M": 0,
+    "WS10M": 0,
+    "PRECTOTCORR": 0,
+    "PS": 0
+  },
+  "original_era5_recovered": false,
+  "independent_ground_meteorology": false,
+  "epa_daily_interval_timezone_aligned": false,
+  "note": "Overlapping date coverage only; station-day intervals and QC need assessment before model fitting or formal validation."
+}

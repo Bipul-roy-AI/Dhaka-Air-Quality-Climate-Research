@@ -1,0 +1,210 @@
+[
+  {
+    "request_url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=23.7104&longitude=90.40744&start_date=2022-08-04&end_date=2022-08-07&hourly=pm2_5%2Cpm10%2Ccarbon_monoxide%2Cnitrogen_dioxide%2Csulphur_dioxide%2Cozone&domains=cams_global&timezone=UTC",
+    "response_file": "openmeteo-2022-08-04.json",
+    "response_sha256": "a0da361e539b404307886fafaebc9a829cbb7ab6b47a109d61b8e1a3df48654a",
+    "api_timezone": "GMT",
+    "utc_offset_seconds": 0,
+    "api_units": {
+      "time": "iso8601",
+      "pm2_5": "\u03bcg/m\u00b3",
+      "pm10": "\u03bcg/m\u00b3",
+      "carbon_monoxide": "\u03bcg/m\u00b3",
+      "nitrogen_dioxide": "\u03bcg/m\u00b3",
+      "sulphur_dioxide": "\u03bcg/m\u00b3",
+      "ozone": "\u03bcg/m\u00b3"
+    },
+    "response_coordinates": [
+      23.700005,
+      90.399994
+    ],
+    "same_clock_label_matches": {
+      "pm2_5": {
+        "n": 96,
+        "matches_at_1e_6": 96,
+        "max_abs_difference": 0.0
+      },
+      "pm10": {
+        "n": 96,
+        "matches_at_1e_6": 96,
+        "max_abs_difference": 0.0
+      },
+      "carbon_monoxide": {
+        "n": 96,
+        "matches_at_1e_6": 96,
+        "max_abs_difference": 0.0
+      },
+      "nitrogen_dioxide": {
+        "n": 96,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.10000000000000142
+      },
+      "sulphur_dioxide": {
+        "n": 96,
+        "matches_at_1e_6": 71,
+        "max_abs_difference": 0.10000000000000053
+      },
+      "ozone": {
+        "n": 96,
+        "matches_at_1e_6": 96,
+        "max_abs_difference": 0.0
+      }
+    }
+  },
+  {
+    "request_url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=23.7104&longitude=90.40744&start_date=2023-01-10&end_date=2023-01-12&hourly=pm2_5%2Cpm10%2Ccarbon_monoxide%2Cnitrogen_dioxide%2Csulphur_dioxide%2Cozone&domains=cams_global&timezone=UTC",
+    "response_file": "openmeteo-2023-01-10.json",
+    "response_sha256": "e14f30a88817d62d712e648be058e3819ac4262526d79745232ef370cc6c4711",
+    "api_timezone": "GMT",
+    "utc_offset_seconds": 0,
+    "api_units": {
+      "time": "iso8601",
+      "pm2_5": "\u03bcg/m\u00b3",
+      "pm10": "\u03bcg/m\u00b3",
+      "carbon_monoxide": "\u03bcg/m\u00b3",
+      "nitrogen_dioxide": "\u03bcg/m\u00b3",
+      "sulphur_dioxide": "\u03bcg/m\u00b3",
+      "ozone": "\u03bcg/m\u00b3"
+    },
+    "response_coordinates": [
+      23.700005,
+      90.399994
+    ],
+    "same_clock_label_matches": {
+      "pm2_5": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      },
+      "pm10": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      },
+      "carbon_monoxide": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      },
+      "nitrogen_dioxide": {
+        "n": 72,
+        "matches_at_1e_6": 54,
+        "max_abs_difference": 0.10000000000000853
+      },
+      "sulphur_dioxide": {
+        "n": 72,
+        "matches_at_1e_6": 54,
+        "max_abs_difference": 0.10000000000000142
+      },
+      "ozone": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      }
+    }
+  },
+  {
+    "request_url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=23.7104&longitude=90.40744&start_date=2024-07-10&end_date=2024-07-12&hourly=pm2_5%2Cpm10%2Ccarbon_monoxide%2Cnitrogen_dioxide%2Csulphur_dioxide%2Cozone&domains=cams_global&timezone=UTC",
+    "response_file": "openmeteo-2024-07-10.json",
+    "response_sha256": "30d544750f80cfa51b7e904bc6cfa5d07acc372e0d036c9a2972ce1bb5c6da1d",
+    "api_timezone": "GMT",
+    "utc_offset_seconds": 0,
+    "api_units": {
+      "time": "iso8601",
+      "pm2_5": "\u03bcg/m\u00b3",
+      "pm10": "\u03bcg/m\u00b3",
+      "carbon_monoxide": "\u03bcg/m\u00b3",
+      "nitrogen_dioxide": "\u03bcg/m\u00b3",
+      "sulphur_dioxide": "\u03bcg/m\u00b3",
+      "ozone": "\u03bcg/m\u00b3"
+    },
+    "response_coordinates": [
+      23.700005,
+      90.399994
+    ],
+    "same_clock_label_matches": {
+      "pm2_5": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      },
+      "pm10": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      },
+      "carbon_monoxide": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      },
+      "nitrogen_dioxide": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      },
+      "sulphur_dioxide": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      },
+      "ozone": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      }
+    }
+  },
+  {
+    "request_url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=23.7104&longitude=90.40744&start_date=2025-11-20&end_date=2025-11-22&hourly=pm2_5%2Cpm10%2Ccarbon_monoxide%2Cnitrogen_dioxide%2Csulphur_dioxide%2Cozone&domains=cams_global&timezone=UTC",
+    "response_file": "openmeteo-2025-11-20.json",
+    "response_sha256": "c17e238e86b89de60df72582457b5d6d016ea5e8be3f6d0ef8ef76fc3d36192c",
+    "api_timezone": "GMT",
+    "utc_offset_seconds": 0,
+    "api_units": {
+      "time": "iso8601",
+      "pm2_5": "\u03bcg/m\u00b3",
+      "pm10": "\u03bcg/m\u00b3",
+      "carbon_monoxide": "\u03bcg/m\u00b3",
+      "nitrogen_dioxide": "\u03bcg/m\u00b3",
+      "sulphur_dioxide": "\u03bcg/m\u00b3",
+      "ozone": "\u03bcg/m\u00b3"
+    },
+    "response_coordinates": [
+      23.700005,
+      90.399994
+    ],
+    "same_clock_label_matches": {
+      "pm2_5": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      },
+      "pm10": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      },
+      "carbon_monoxide": {
+        "n": 72,
+        "matches_at_1e_6": 68,
+        "max_abs_difference": 55.0
+      },
+      "nitrogen_dioxide": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      },
+      "sulphur_dioxide": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      },
+      "ozone": {
+        "n": 72,
+        "matches_at_1e_6": 72,
+        "max_abs_difference": 0.0
+      }
+    }
+  }
+]

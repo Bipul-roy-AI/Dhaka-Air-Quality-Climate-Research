@@ -1,6 +1,52 @@
 # Dhaka | Air Pollution Dynamics, Climate Context & Health-Relevant Exposure Indicators
 
-**Study area:** Dhaka, Bangladesh · **Archive period:** January 2000–December 2025 · **Primary analysis unit:** month (312 records)  
+> **Paper-style analysis completed:** [Detailed methods/results](research_docs/analysis_results/ANALYSIS_REPORT.md), [typeset PDF](research_docs/analysis_results/ANALYSIS_REPORT.pdf), [summary and15figures](research_docs/analysis_results/ANALYSIS_FIGURES.pdf), and [reproduction commands](research_docs/analysis_results/REPRODUCE.md). The study now separates observed2016–2021 embassy PM2.5 from the2017–2022 HyAQMet reanalysis reproduction. Original archived results below remain historical. Timing-safe lag2 weather is primary; its later-period incremental benefit is not established.
+
+> **Rebuilt pipeline now available.** See the reproducible commands below and [repair status / remaining data needs](research_docs/REPAIR_PLAN_AND_DATA_REQUIREMENTS.md). All original CSVs and archived model scores are preserved. Source attribution is now Paul, Tapon (2026), [Mendeley Data V2, DOI10.17632/9j447cynb9.2](https://doi.org/10.17632/9j447cynb9.2); its underlying station/product lineage, units, timezone and source transition remain unverified.
+
+> **Public sources recovered:** [Online source recovery](research_docs/ONLINE_SOURCE_RECOVERY.md) records the exact Mendeley checksum match, later-segment Open-Meteo fingerprints, downloadable EPA/embassy reference candidates and a documented NASA weather alternative. Original exports and model scores remain unchanged.
+
+## Reconstruct and evaluate from original inputs
+
+Use Python 3.12 and `uv`. From this repository directory:
+
+```bash
+uv venv --python 3.12 .venv
+uv pip sync --python .venv/bin/python --require-hashes requirements.lock
+uv pip install --python .venv/bin/python --no-deps -e .
+.venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python -m dhaka_air_quality \
+  --input "/path/to/original/AQI Bangladesh.csv" \
+  --climate Phase_3_Climate_Integration/data/raw/Dhaka_RemoteSensing_Climate_v8_2_2000_2025.csv \
+  --archived-monthly Phase_3_Climate_Integration/data/processed/Dhaka_Air_Climate_Feature_Engineered_2000_2025.csv \
+  --output artifacts/rebuilt
+```
+
+`--input` also accepts the original ZIP; it reads the unambiguous CSV member without extracting it. The source archive is not bundled. Obtain the cited deposited version and preserve its original bytes/licence. Attribution is attached automatically only when its CSV hash matches the inspected upload. A fresh download's byte identity has not been established. Choose a new output directory for another run; existing nonempty output directories are preserved. To run without a figure, add `--no-figure`.
+
+Outputs include rebuilt monthly data, source/coverage audit, raw-to-archived reconciliation, training-fold predictions, model-specific and common-case metrics, a run manifest with input/code hashes, a data dictionary, and a run report. [Reviewed run snapshot](research_docs/rebuilt_results/RUN_REPORT.md) contains the actual local execution; [metrics](research_docs/rebuilt_results/metrics.csv) use14 rolling historical prediction months, September2024–October2025. These are exploratory retrospective results, not an untouched-test or operational forecasting certification.
+
+### What changed computationally
+
+- Exact Dhaka selection and one unique city timestamp per hour; do not count identical Azimpur data as a second independent monitor. Conflicting same-city rows require adjudication instead of arbitrary averaging.
+- 311 observed-span monthly rows; no appended December2025 target. November2025 is partial. August2022 remains a mixed-regime diagnostic month. Source-qualified exploratory cohort:38 complete later-regime months, September2022–October2025, with no PM2.5>PM10 flags.
+- Earlier/mixed/partial records remain visible for audit but excluded from the primary pilot. A cohort flag does not certify the later product as measured pollution.
+- Calendar-aware backward lags, train-fold imputation/scaling, fixed-alpha regularized regression, persistence, seasonal-naive and training-only calendar climatology. Archived all-period anomalies and same-month predictors are excluded.
+- Optional weather comparison uses previous-month variables only. Satellite values are retained for coverage inspection, not included in this tiny pilot. No unsupported early sensor backfill or causal/health interpretation.
+- Immutable old exports; versioned code and result snapshots distinguish repaired computations from archived results.
+
+In the rebuilt pilot, calendar climatology RMSE10.97 and lag/calendar Ridge10.98 outperform the lagged-weather Ridge11.71; all share the same14 cases. This limited comparison does **not** establish that weather is generally unhelpful. It provides no justification to claim weather adds skill in this pilot or to expand a model tournament without new evidence. Target units and actual publication latency remain unverified. These new scores use different dates and inputs from the archived model table and should not be compared as a like-for-like accuracy improvement.
+
+### Paper-inspired practices and remaining evidence
+
+Following HyAQMet's useful practices, retain native sources, product/version identifiers, units, geographical support, timestamp conventions and executable processing. Do not equate reanalysis intercomparison with independent station validation, increase sample size by interpolation, or copy unverified rainfall/radiation/gas conversion code. This repair does not merge HyAQMet or repair either paper's upstream source files.
+
+The [source manifest](research_docs/source_metadata/source_manifest.json) and [official Mendeley metadata snapshot](research_docs/source_metadata/mendeley_v2_public_metadata.json) distinguish depositor claims from verified file properties. Still needed: acquisition/generation code and segment-specific metadata from the depositor, the actual climate/satellite extraction script and independent DoE/US Embassy monitor data where available. No secret values are needed in chat. Prior source uncertainties and historical tables below remain archival context.
+
+---
+
+
+**Legacy archive context:** Dhaka, Bangladesh · January 2000–December 2025 · 312 archived monthly rows, including an imputed final month. The rebuilt dataset above has 311 monthly rows through November 2025.
 **Research status (27 October 2026): Exploratory results available; historical data provenance, source harmonization and independent validation are ongoing.**  
 **Type:** Independent environmental data-science research; not a peer-reviewed publication or a validated estimate of health outcomes.
 
@@ -34,7 +80,7 @@ In the processed monthly table, annual PM2.5 means are **158.71 (2021)**, **119.
 
 ![Source-transition diagnostic using the published monthly table](research_docs/figures/pm25_source_discontinuity.svg)
 
-*Figure 1. Diagnostic plot of archived monthly PM2.5 values around the suspected 2022 source boundary. The vertical marker is an audit flag, **not** a verified physical change point. [Underlying monthly table]([Phase_3_Climate_Integration/data/processed/Dhaka_Air_Climate_Feature_Engineered_2000_2025.csv](https://github.com/Bipul-roy-AI/Dhaka-Air-Pollution-Climate-Health-Intelligence/blob/main/Phase_3_Climate_Integration/data/processed/Dhaka_Air_Climate_Feature_Engineered_2000_2025.csv)).*
+*Figure 1. Diagnostic plot of archived monthly PM2.5 values around the suspected 2022 source boundary. The vertical marker is an audit flag, **not** a verified physical change point. [Underlying archived monthly table](Phase_3_Climate_Integration/data/processed/Dhaka_Air_Climate_Feature_Engineered_2000_2025.csv).*
 
 ### Finding B — Apparent long-term and seasonal patterns
 

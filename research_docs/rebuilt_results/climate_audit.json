@@ -1,0 +1,28 @@
+{
+  "sha256": "ff495a9502fcf3e1a0460be374d50a7efc560a1c04c8ecd6786c845def7526d5",
+  "columns_retained": [
+    "temperature",
+    "dewpoint",
+    "wind_speed",
+    "rainfall_mm",
+    "pressure",
+    "AOD",
+    "LST_C",
+    "NO2"
+  ],
+  "present_months": {
+    "temperature": 311,
+    "dewpoint": 311,
+    "wind_speed": 311,
+    "rainfall_mm": 311,
+    "pressure": 311,
+    "AOD": 266,
+    "LST_C": 270,
+    "NO2": 90
+  },
+  "archived_anomalies_used": false,
+  "predictor_units_and_extraction_verified": false,
+  "weather_evaluation_uses_lags_not_contemporaneous_values": true,
+  "satellite_columns_retained_for_coverage_only": true,
+  "warning": "rainfall_mm aggregation meaning, geographic support and timestamp convention remain unverified"
+}

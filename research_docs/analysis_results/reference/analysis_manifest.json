@@ -1,0 +1,26 @@
+{
+  "assumption": "Nominal release BST calendar days compared with published EPA date labels; station-day averaging timezone and original QA remain unresolved. UTC and \u00b11day sensitivity retained without choosing the best after seeing scores.",
+  "comparison_type": "Conditional paired independent-point-reference comparison; regional spatial support differs, not causal or operational validation.",
+  "primary_metrics": {
+    "n": 1752,
+    "bias": 16.150143709898778,
+    "MAE": 24.97829288828343,
+    "RMSE": 34.229553665094784,
+    "Pearson_r": 0.8972375271418193,
+    "Spearman_rho": 0.906737524684453,
+    "R2": 0.7277369374336791
+  },
+  "bootstrap": "Moving calendar blocks of7/30days; conditional sampling intervals, not measurement/model-structural uncertainty.",
+  "mirror": {
+    "raw_rows": 12777,
+    "valid_rows_before_duplicate_adjudication": 12714,
+    "conflicting_timestamp_count": 2,
+    "retained_unique_valid_hours": 12710,
+    "point": "All four conventions are sensitivity checks, not four independent stations; exact averaging convention remains a source question."
+  },
+  "source_hashes": {
+    "HyAQMet.csv": "420f59fd7e7cd527f1475b309411f27cb8ce4085490ca5daba4e1c517e0c4649",
+    "epa_observed_daily_calendar.csv": "2dcafb06a204dc0c13e1b7c20eb1c37af32ceba7a63eb6e6033e751f0ee1fd43",
+    "figshare_airnow_12cities.zip": "3a4bdf277b02710ef6405d2cc284057056f76bd3552570ee7e0afce002c2245c"
+  }
+}

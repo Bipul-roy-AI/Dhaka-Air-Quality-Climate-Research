@@ -1,5 +1,8 @@
 # Dhaka historical air-quality series: provenance and validation status
 
+> **Repair update:** The original archive is now attributed to Paul, Tapon (2026), [Mendeley Data V2, DOI10.17632/9j447cynb9.2](https://doi.org/10.17632/9j447cynb9.2). This resolves the deposited-source citation, not its underlying observational lineage. New code, quality flags and results are documented in the root README and [repair plan](REPAIR_PLAN_AND_DATA_REQUIREMENTS.md). Historical facts below describe the original exports; do not apply their inflated counts or imputed final target to the rebuilt dataset. Independent monitor validation remains open.
+
+
 **Status: Open investigation (27 October 2026).** This document accompanies, but does not replace, the original project datasets. No original samples or result files were modified.
 
 ## 1. What is verified directly from the committed files?

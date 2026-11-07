@@ -1,0 +1,7 @@
+variable,days,finite_days,source,daily_interval_aligned_to_embassy
+T2M,2192,2192,NASA POWER/MERRA-2 meteorology,False
+T2MDEW,2192,2192,NASA POWER/MERRA-2 meteorology,False
+RH2M,2192,2192,NASA POWER/MERRA-2 meteorology,False
+WS10M,2192,2192,NASA POWER/MERRA-2 meteorology,False
+PRECTOTCORR,2192,2192,NASA POWER/MERRA-2 meteorology,False
+PS,2192,2192,NASA POWER/MERRA-2 meteorology,False

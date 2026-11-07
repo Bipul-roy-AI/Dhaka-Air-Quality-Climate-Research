@@ -1,0 +1,36 @@
+[
+  {
+    "filename": "AQI Bangladesh.csv",
+    "id": "504f2a8f-3b28-4942-92be-898e0b8c5402",
+    "content_details": {
+      "id": "b549f24d-b783-490d-99a2-932e679b9822",
+      "sha256_hash": "8760175fc048eea4180b828fd60d10cb799a73a5144a7e4aca19ddbaf8dbdd62",
+      "content_type": "text/csv",
+      "size": 98303184,
+      "created_date": "2026-01-21T09:20:31.59Z",
+      "download_url": "https://data.mendeley.com/public-files/datasets/9j447cynb9/files/504f2a8f-3b28-4942-92be-898e0b8c5402/file_downloaded",
+      "view_url": "https://data.mendeley.com/public-files/datasets/9j447cynb9/files/504f2a8f-3b28-4942-92be-898e0b8c5402/file_viewed",
+      "download_expiry_time": "2126-11-07T20:20:45.692473046Z"
+    },
+    "size": 98303184,
+    "last_modified_date": "2026-01-21T09:20:31.59Z",
+    "status": "COMPLETED"
+  },
+  {
+    "filename": "cities.csv",
+    "id": "67e8980a-3858-4e81-9c71-649c5e52dd96",
+    "content_details": {
+      "id": "0e5a5c3c-7b7f-4697-aa64-458155c59600",
+      "sha256_hash": "dc0b7b598a2c595daf942d1011681fcd1d3475e398579d29180d0526b4ac102c",
+      "content_type": "text/csv",
+      "size": 3411,
+      "created_date": "2026-01-18T06:40:01.834Z",
+      "download_url": "https://data.mendeley.com/public-files/datasets/9j447cynb9/files/67e8980a-3858-4e81-9c71-649c5e52dd96/file_downloaded",
+      "view_url": "https://data.mendeley.com/public-files/datasets/9j447cynb9/files/67e8980a-3858-4e81-9c71-649c5e52dd96/file_viewed",
+      "download_expiry_time": "2126-11-07T20:20:45.692478106Z"
+    },
+    "size": 3411,
+    "last_modified_date": "2026-01-18T06:40:01.834Z",
+    "status": "COMPLETED"
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "evaluation_type": "exploratory_rolling_one_step_hindcast",
+  "source_regime": "later_unverified",
+  "source_validated": false,
+  "publication_latency_verified": false,
+  "operational_forecast_validated": false,
+  "target_units": "unverified_original_field",
+  "input_months": 311,
+  "calendar_months": 311,
+  "eligible_months": 38,
+  "min_train_months": 24,
+  "scored_forecast_months": 14,
+  "models": [
+    "persistence",
+    "seasonal_naive",
+    "calendar_climatology",
+    "ridge_lags_calendar",
+    "ridge_lags_calendar_weather"
+  ],
+  "ridge_alpha": 1.0,
+  "features": {
+    "ridge_lags_calendar": [
+      "pm25_lag_1",
+      "pm25_lag_3",
+      "pm25_lag_12",
+      "month_sin",
+      "month_cos"
+    ],
+    "ridge_lags_calendar_weather": [
+      "pm25_lag_1",
+      "pm25_lag_3",
+      "pm25_lag_12",
+      "month_sin",
+      "month_cos",
+      "temperature_lag_1",
+      "dewpoint_lag_1",
+      "wind_speed_lag_1",
+      "rainfall_mm_lag_1",
+      "pressure_lag_1"
+    ]
+  },
+  "feature_imputation": "per-fold training median; target is never imputed",
+  "preprocessing_fit_scope": "eligible months strictly before each target month",
+  "global_anomaly_columns_used": false,
+  "metric_case_sets": {
+    "available_cases": "model-specific nonmissing predictions; do not compare unmatched case counts",
+    "common_cases": "intersection of predicted dates across all declared models"
+  },
+  "limitations": [
+    "Unknown source, units and publication latency prevent operational or ground-truth claims.",
+    "Later regime is a detected archive-construction regime, not an authenticated product identity.",
+    "Already inspected historical dates are retrospective; no newly untouched test period is claimed.",
+    "No tuning, causal attribution, reference-monitor validation or uncertainty certification is performed."
+  ]
+}

@@ -1,0 +1,3 @@
+block_months,status,eligible_months,candidate_contiguous_blocks,slope_ugm3_per_year,ci95_low,ci95_high,bootstrap_replicates,seed,interval_interpretation
+12,exploratory_conditional_interval,69,33,0.6765899310123713,-0.16616819543784725,1.5330682435751768,1000,20261107,"Conditional on estimated calendar-month profile and stationary block-residual approximation; six-year interval, not climate attribution or a significance test."
+6,exploratory_conditional_interval,69,51,0.6765899310123713,-0.5877990798838173,2.027246010780129,1000,20261107,"Conditional on estimated calendar-month profile and stationary block-residual approximation; six-year interval, not climate attribution or a significance test."

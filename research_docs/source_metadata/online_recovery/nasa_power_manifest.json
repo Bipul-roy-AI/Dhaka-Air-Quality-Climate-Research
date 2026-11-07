@@ -1,0 +1,131 @@
+{
+  "purpose": "New, explicitly identified meteorological comparison candidate; not recovery or byte reproduction of the legacy ERA5 export",
+  "provider": "NASA POWER",
+  "sources": [
+    "MERRA2",
+    "POWER"
+  ],
+  "api": {
+    "version": "v2.10.3",
+    "name": "POWER Daily API"
+  },
+  "source_url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2MDEW%2CRH2M%2CWS10M%2CPRECTOTCORR%2CPS&community=AG&longitude=90.40744&latitude=23.7104&start=20220101&end=20251231&format=JSON&time-standard=UTC",
+  "request_parameters": {
+    "parameters": "T2M,T2MDEW,RH2M,WS10M,PRECTOTCORR,PS",
+    "community": "AG",
+    "longitude": 90.40744,
+    "latitude": 23.7104,
+    "start": "20220101",
+    "end": "20251231",
+    "format": "JSON",
+    "time-standard": "UTC"
+  },
+  "retrieved_at_utc": "2026-11-07T20:23:49.396910+00:00",
+  "response_file": "nasa-power-archivecoords-2022-2025.json",
+  "response_sha256": "0e9468431070c732f8fec8ca9b71370b30dd0a1cf74d67db877cb5a372edfa9d",
+  "coordinate_provenance": "Matches the sole lat/lon pair of Dhaka rows in the supplied AQI CSV; city label is not an instrument identity",
+  "requested_coordinates": {
+    "latitude": 23.7104,
+    "longitude": 90.40744
+  },
+  "response_geometry": {
+    "type": "Point",
+    "coordinates": [
+      90.407,
+      23.71,
+      6.64
+    ]
+  },
+  "time_standard": "UTC",
+  "fill_value": -999.0,
+  "parameter_metadata": {
+    "T2M": {
+      "units": "C",
+      "longname": "Temperature at 2 Meters"
+    },
+    "T2MDEW": {
+      "units": "C",
+      "longname": "Dew/Frost Point at 2 Meters"
+    },
+    "RH2M": {
+      "units": "%",
+      "longname": "Relative Humidity at 2 Meters"
+    },
+    "WS10M": {
+      "units": "m/s",
+      "longname": "Wind Speed at 10 Meters"
+    },
+    "PRECTOTCORR": {
+      "units": "mm/day",
+      "longname": "Precipitation Corrected"
+    },
+    "PS": {
+      "units": "kPa",
+      "longname": "Surface Pressure"
+    }
+  },
+  "diagnostics": {
+    "T2M": {
+      "n_days": 1461,
+      "fill_count": 0,
+      "first": "20220101",
+      "last": "20251231",
+      "units": "C",
+      "min_excluding_fill": 13.78,
+      "max_excluding_fill": 33.56
+    },
+    "T2MDEW": {
+      "n_days": 1461,
+      "fill_count": 0,
+      "first": "20220101",
+      "last": "20251231",
+      "units": "C",
+      "min_excluding_fill": 4.35,
+      "max_excluding_fill": 28.02
+    },
+    "RH2M": {
+      "n_days": 1461,
+      "fill_count": 0,
+      "first": "20220101",
+      "last": "20251231",
+      "units": "%",
+      "min_excluding_fill": 36.48,
+      "max_excluding_fill": 95.58
+    },
+    "WS10M": {
+      "n_days": 1461,
+      "fill_count": 0,
+      "first": "20220101",
+      "last": "20251231",
+      "units": "m/s",
+      "min_excluding_fill": 0.51,
+      "max_excluding_fill": 16.18
+    },
+    "PRECTOTCORR": {
+      "n_days": 1461,
+      "fill_count": 0,
+      "first": "20220101",
+      "last": "20251231",
+      "units": "mm/day",
+      "min_excluding_fill": 0.0,
+      "max_excluding_fill": 157.04
+    },
+    "PS": {
+      "n_days": 1461,
+      "fill_count": 0,
+      "first": "20220101",
+      "last": "20251231",
+      "units": "kPa",
+      "min_excluding_fill": 98.85,
+      "max_excluding_fill": 101.88
+    }
+  },
+  "independent_ground_truth": false,
+  "warnings": [
+    "Meteorology derives from MERRA2/POWER products, not independent Dhaka station measurements.",
+    "Original archive timezone remains unknown; matching calendar labels is not proof of interval equivalence.",
+    "Precipitation supplied in mm/day, pressure in kPa; no unit conversion applied to this response.",
+    "Regional/native-grid data and city-specific observations have different spatial support.",
+    "Use as a separately versioned sensitivity dataset; never overwrite the original climate CSV."
+  ]
+}

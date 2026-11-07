@@ -1,0 +1,13 @@
+{
+  "doi": "10.5281/zenodo.20705735",
+  "zip_filename": "HyAQMet.zip",
+  "zip_md5": "449a8f7a530161f9aee2dd5f135f8ea4",
+  "zip_sha256": "60749b0e3815ca09009ce69d5b626070194a54a7d5437409d9e5f0720a254e35",
+  "csv_sha256": "420f59fd7e7cd527f1475b309411f27cb8ce4085490ca5daba4e1c517e0c4649",
+  "reference_github_commit": "f23ee72d6bbec8a8ab36423295e14f1b8e3d4100",
+  "license": "CC BY4.0",
+  "paper_doi": "10.1002/gdj3.70111",
+  "native_CAMS_interval_hours": 3,
+  "release_interval_hours": 1,
+  "release_timestamps": "BST UTC+06 according to deposited README"
+}

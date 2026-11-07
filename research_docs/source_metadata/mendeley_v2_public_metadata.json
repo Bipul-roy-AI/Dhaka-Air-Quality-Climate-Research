@@ -1,0 +1,93 @@
+{
+  "id": "9j447cynb9",
+  "doi": {
+    "id": "10.17632/9j447cynb9.2",
+    "status": "allocated",
+    "prefix": "10.17632"
+  },
+  "name": "Bangladesh Air Quality Index (AQI) Dataset (2000–2025): Historical Hourly Air Pollution Data Across 103 Cities",
+  "description": "The Bangladesh Air Quality Index (AQI) Dataset (2000–2025) is a large-scale, high-resolution environmental dataset providing historical air pollution measurements across 103 cities in Bangladesh. The dataset spans 25 years and contains 1,048,551 hourly records, making it one of the most comprehensive publicly available air quality datasets for the country. It covers urban, divisional, district, sub-district, coastal, and border regions, offering extensive spatial and temporal coverage.\n\nEach record includes concentrations of eight key air pollutants: PM10, PM2.5, CO, CO2, NO2, SO2, O3, along with a composite Air Quality Index (AQI) value. Additional attributes include city identifiers, city names, geographic coordinates (latitude and longitude), and timestamps in ISO 8601 format, ensuring accurate spatial and temporal alignment. The dataset is provided in a standardized CSV format with 13 columns, allowing straightforward integration with statistical analysis, visualization, and machine learning pipelines.\n\nTemporal coverage varies by location, with earlier records concentrated in major metropolitan areas such as Dhaka, Chittagong, and Sylhet, while recent years include expanded coverage of smaller cities and upazilas. The hourly resolution enables detailed short-term variability analysis as well as long-term trend assessment. Geographic coverage spans all major regions of Bangladesh, including the Ganges–Brahmaputra–Meghna delta, coastal zones such as Cox’s Bāzār and Teknāf, and northern border areas like Panchagarh and Thākurgaon.\n\nAQI values are calculated according to the United States Environmental Protection Agency (US EPA) standard and categorized into six levels: Good, Moderate, Unhealthy for Sensitive Groups, Unhealthy, Very Unhealthy, and Hazardous. Some missing values are present due to sensor maintenance, calibration, or data transmission limitations, and variations in monitoring equipment may introduce location- and time-dependent differences.\n\nThis dataset supports a wide range of applications, including air quality monitoring, environmental and public health research, climate and urban studies, policy evaluation, and machine learning tasks such as pollutant prediction, city clustering, anomaly detection, and AQI forecasting using models like LSTM, ARIMA, and Prophet. The dataset is released under the Creative Commons Attribution 4.0 (CC BY 4.0) license, allowing unrestricted use, distribution, and adaptation with appropriate attribution.",
+  "version": 2,
+  "contributors": [
+    {
+      "institution": {
+        "id": "0ad97c43-5173-56e6-bbe6-46dad5323862",
+        "name": "Daffodil International University",
+        "ror_id": "https://ror.org/052t4a858"
+      },
+      "contribution": "Data Collection and Preprocessing",
+      "profile_id": "0fa85a39-72c5-4de7-aacb-8a379ecac0ed",
+      "first_name": "Tapon",
+      "last_name": "Paul",
+      "orcid_id": "0009-0008-4157-5480"
+    }
+  ],
+  "versions": [
+    {
+      "version": 2,
+      "available": true,
+      "publish_date": "2026-01-21T17:00:41.126Z"
+    },
+    {
+      "version": 1,
+      "available": true,
+      "publish_date": "2026-01-19T19:30:56.782Z"
+    }
+  ],
+  "articles": [],
+  "categories": [
+    {
+      "id": "data.elsevier.com/vocabulary/OmniScience/Concept-210634992",
+      "label": "Air Quality"
+    },
+    {
+      "id": "data.elsevier.com/vocabulary/OmniScience/Concept-249523402",
+      "label": "Machine Learning"
+    }
+  ],
+  "institutions": [
+    {
+      "id": "0ad97c43-5173-56e6-bbe6-46dad5323862",
+      "name": "Daffodil International University",
+      "ror_id": "https://ror.org/052t4a858"
+    }
+  ],
+  "available": true,
+  "size": 0,
+  "owner": {
+    "institution": {
+      "id": "0ad97c43-5173-56e6-bbe6-46dad5323862",
+      "name": "Daffodil International University",
+      "ror_id": "https://ror.org/052t4a858"
+    },
+    "contribution": "Data Collection and Preprocessing",
+    "profile_id": "0fa85a39-72c5-4de7-aacb-8a379ecac0ed",
+    "first_name": "Tapon",
+    "last_name": "Paul",
+    "orcid_id": "0009-0008-4157-5480"
+  },
+  "channel": "WEB",
+  "owner_id": "0fa85a39-72c5-4de7-aacb-8a379ecac0ed",
+  "publish_date": "2026-01-21T17:00:41.126Z",
+  "data_licence": {
+    "id": "01d9c749-3c4d-4431-9df3-620b2dcfe144",
+    "description": "You can share, copy and modify this dataset so long as you give appropriate credit, provide a link to the CC BY license, and indicate if changes were made, but you may not do so in a way that suggests the rights holder has endorsed you or your use of the dataset. Note that further permission may be required for any content within the dataset that is identified as belonging to a third party.",
+    "url": "http://creativecommons.org/licenses/by/4.0",
+    "category": "Creative",
+    "short_name": "CC BY 4.0",
+    "full_name": "Creative Commons Attribution 4.0 International"
+  },
+  "related_links": [],
+  "funders": [],
+  "customer_id": "7377952c-6404-4428-bbfc-77242cfc301e",
+  "modified_on": "2026-01-21T09:20:35.386Z",
+  "created_on": "2026-01-18T06:05:40.942Z",
+  "confidential": false,
+  "links": {
+    "view": "https://data.mendeley.com/datasets/9j447cynb9"
+  },
+  "repository": {
+    "id": "MENDELEY_DATA",
+    "name": "Mendeley Data"
+  }
+}
