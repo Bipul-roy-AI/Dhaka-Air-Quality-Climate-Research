@@ -23,7 +23,7 @@ The earlier 2000–2025 archive [6] was excluded from environmental trend and pr
 
 ![Bangladesh study-area map with Dhaka reference locations](figures/study_area.png)
 
-The simple location map uses public-domain Natural Earth country context [8], reported embassy coordinates and the source paper’s approximate Dhaka reference point. It shows locations rather than a pollution surface or city boundary. [Editable SVG](figures/study_area.svg) · [Figure PDF](figures/study_area.pdf).
+The simple location map uses public-domain Natural Earth country context [8] and the reported Dhaka embassy monitor location. It shows a national location view rather than a pollution surface or city boundary. [Editable SVG](figures/study_area.svg) · [Figure PDF](figures/study_area.pdf).
 
 ### 2.2 Descriptive and statistical analysis
 

@@ -269,23 +269,23 @@
     },
     {
       "path": "figures/study_area.png",
-      "sha256": "34f856e0184934af2bdf440b12c5138c5bab92e33bb30772327bc4dda6b04920",
-      "bytes": 1105544
+      "sha256": "f9a53de572e30d385e0b5a142cdf39d8279af49887d688d37fc29a8d9fc43c4c",
+      "bytes": 887602
     },
     {
       "path": "figures/study_area.svg",
-      "sha256": "8dc6be496b3871e847cf2d2ea4e4d32bee44a17c841abf10dd9b3634f08b0f4e",
-      "bytes": 895237
+      "sha256": "7d08ce8e22eb1a3e79e92c9d53b3853a2db95ca0bddf850851f9ca04a577fa75",
+      "bytes": 426515
     },
     {
       "path": "figures/study_area.pdf",
-      "sha256": "7b3090bd2d897d9a6c23b8abbd7103c3cad25aba2f9bb321d7e8acd2c76ef1b1",
-      "bytes": 399040
+      "sha256": "04214fb0100b669355e0ee27770cf3be6b92af58ebe6170826938ef41bfeaf3e",
+      "bytes": 194860
     },
     {
       "path": "data/maps/map_manifest.json",
-      "sha256": "9a4191d6d3efbca170a49d5d6ca8eea4b584c89b4db699a553e6b81e46f656cb",
-      "bytes": 1881
+      "sha256": "5843ea5f784a2a857677d5ced8b856ffb6be7a40272dfdf58d61421ac461caa8",
+      "bytes": 1493
     }
   ]
 }
