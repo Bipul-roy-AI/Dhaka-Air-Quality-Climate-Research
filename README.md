@@ -1,182 +1,204 @@
-# Dhaka | Air Pollution Dynamics, Climate Context & Health-Relevant Exposure Indicators
+# Dhaka | Observed Air Quality, Meteorological Context and Reanalysis Evaluation
 
-> **Paper-style analysis completed:** [Detailed methods/results](research_docs/analysis_results/ANALYSIS_REPORT.md), [typeset PDF](research_docs/analysis_results/ANALYSIS_REPORT.pdf), [summary and15figures](research_docs/analysis_results/ANALYSIS_FIGURES.pdf), and [reproduction commands](research_docs/analysis_results/REPRODUCE.md). The study now separates observed2016–2021 embassy PM2.5 from the2017–2022 HyAQMet reanalysis reproduction. Original archived results below remain historical. Timing-safe lag2 weather is primary; its later-period incremental benefit is not established.
+**Study area:** Dhaka, Bangladesh · **Observed PM₂.₅ period:** January 2016–December 2021 · **HyAQMet reproduction:** January 2017–December 2022 · **Separate archive audit:** January 2000–November 2025
 
-> **Rebuilt pipeline now available.** See the reproducible commands below and [repair status / remaining data needs](research_docs/REPAIR_PLAN_AND_DATA_REQUIREMENTS.md). All original CSVs and archived model scores are preserved. Source attribution is now Paul, Tapon (2026), [Mendeley Data V2, DOI10.17632/9j447cynb9.2](https://doi.org/10.17632/9j447cynb9.2); its underlying station/product lineage, units, timezone and source transition remain unverified.
+**Data and methods:** EPA-hosted U.S. Embassy daily PM₂.₅, NASA POWER/MERRA-2 meteorology, the final HyAQMet reanalysis release, an AirNow hourly mirror, source and coverage audits, seasonal summaries, block-bootstrap uncertainty and chronological retrospective prediction.
 
-> **Public sources recovered:** [Online source recovery](research_docs/ONLINE_SOURCE_RECOVERY.md) records the exact Mendeley checksum match, later-segment Open-Meteo fingerprints, downloadable EPA/embassy reference candidates and a documented NASA weather alternative. Original exports and model scores remain unchanged.
+> **Research status: completed exploratory analyses and reproducible source checks, not a peer-reviewed study or operational forecast.** The observed embassy record, regional reanalysis and original mixed-history archive are different evidence types. A regional model field is not a point-monitor observation; a correlation is not a causal effect. The original 2000–2025 archive is **not treated as 26 years of independently measured pollution**. Daily station QA, averaging conventions and publication latency remain incompletely documented.
 
-## Reconstruct and evaluate from original inputs
+**Read the study:** [Research brief](research_docs/RESEARCH_BRIEF.md) · [Detailed report](research_docs/analysis_results/ANALYSIS_REPORT.md) · [Report PDF](research_docs/analysis_results/ANALYSIS_REPORT.pdf) · [15-figure collection](research_docs/analysis_results/ANALYSIS_FIGURES.pdf) · [Citation](CITATION.cff)
 
-Use Python 3.12 and `uv`. From this repository directory:
+## 1. What this research set out to investigate
+
+Dhaka's air quality varies strongly through the year. This study asks which patterns are supported by observed PM₂.₅, whether weather adds information beyond seasonality and persistence, and how well a regional reanalysis product represents a monitored location.
+
+### Research questions
+
+1. **Observed pollution:** How large is the seasonal PM₂.₅ contrast, and how much of the daily record is actually available?
+2. **Trend:** Does the short observed record support a trend once seasonality, temporal dependence and missing months are considered?
+3. **Meteorological context:** How much of the pollution–weather association is shared seasonality, and does lagged weather improve retrospective prediction beyond simple baselines?
+4. **Regional-product evaluation:** How closely does HyAQMet CAMS PM₂.₅ agree with available embassy observations, and what do correlation, concentration bias and spatial support each tell us?
+5. **Reproducibility:** Which HyAQMet results can be reproduced from its final release, and what source or processing discrepancies remain?
+6. **Historical archive reliability:** What can the original long archive support after checking its lineage, duplicated location values and August 2022 construction boundary?
+
+### Objectives and approach
+
+Separate observed and model-derived targets; retain missingness and source identity; use calendar-month summaries as the primary climatology; test trend uncertainty with temporal blocks; compare predictions on identical observed dates; reproduce the published dataset's diagnostics; and retain limitations beside each result.
+
+![Source types, native support and analysis boundaries](research_docs/analysis_results/source_support_schematic.png)
+
+*The point monitor, meteorological grid and regional air-quality products have different support. More rows, interpolation or additional source names do not automatically provide more independent evidence.*
+
+## 2. Important results, in plain language
+
+### Result A — Observed PM₂.₅ is strongly seasonal, with coverage made explicit
+
+The EPA-hosted embassy series contains **2,117 observed daily values on a 2,192-day calendar**, or **96.58% coverage**, during 2016–2021. The **75 missing days remain missing**. The available-day mean is **87.18 µg/m³**, median **60.71** and maximum **340.79**. These summarize this monitored location and its published days, not city-wide personal exposure.
+
+![Observed daily PM2.5 and monthly coverage](research_docs/analysis_results/observed/observed_daily_and_coverage.png)
+
+![Calendar-month and conventional-season observed PM2.5](research_docs/analysis_results/observed/observed_monthly_and_seasonal.png)
+
+| Conventional seasonal window | Observed / calendar days | Mean PM₂.₅ |
+|---|---:|---:|
+| Winter, December–February | 527 / 542 | **172.02 µg/m³** |
+| Pre-monsoon, March–May | 525 / 552 | 76.40 µg/m³ |
+| Monsoon, June–September | 711 / 732 | **33.53 µg/m³** |
+| Post-monsoon, October–November | 354 / 366 | 84.61 µg/m³ |
+
+**Meaning:** The available winter mean is approximately **5.13 times** the monsoon mean. This pronounced observed seasonal contrast is supported by the record, while its causes cannot be isolated from these summaries. The windows contain 3/3/4/2 months; they are not equal-length independent seasonal replicates. Calendar-month results and equal-year weighting are also provided.
+
+**2,068 of 2,117 observed days (97.69%)** are strictly above **15 µg/m³**, the WHO 2021 daily benchmark applied retrospectively. This is not an AQI calculation, regulatory-compliance determination or health-outcome estimate. Missing-day exceedances are unknown. A separate whole-period 95th-percentile screen identifies **56 observed exceedance runs**; the longest observed uninterrupted run lasts **six days**. Missing days can censor real episodes, and this descriptive threshold was not a prospective alarm rule.
+
+*Evidence: [coverage and methods](research_docs/analysis_results/observed/methods_findings.md) · [monthly statistics](research_docs/analysis_results/observed/calendar_month_statistics.csv) · [seasonal table](research_docs/analysis_results/observed/four_season_statistics.csv) · [episode table](research_docs/analysis_results/observed/pooled_p95_episodes.csv).*
+
+### Result B — The observed record does not establish an increasing trend
+
+Using an exploratory **≥75% calendar-day coverage** screen, **69 of 72 monthly means** qualify. April 2018, May 2020 and September 2021 are excluded. After calendar-month adjustment, the Theil–Sen slope is **+0.677 µg/m³/year**.
+
+| Residual moving-block uncertainty calculation | 95% interval, µg/m³/year |
+|---|---:|
+| 12-month blocks, 1,000 replicates | **−0.166 to +1.533** |
+| 6-month sensitivity, 1,000 replicates | **−0.588 to +2.027** |
+
+![Available-day annual means and uncertain season-adjusted trend](research_docs/analysis_results/observed/observed_annual_and_adjusted_trend.png)
+
+**Meaning:** Both intervals include zero. These calculations do **not establish an increasing trend**, and they do not prove that pollution was unchanged. Six years and conditional residual-block intervals cannot identify a climate-change effect. The intervals hold the estimated seasonal profile fixed and do not cover every source-QA or missingness uncertainty.
+
+*Evidence: [trend inputs and intervals](research_docs/analysis_results/observed/season_adjusted_trend_intervals.csv) · [annual descriptive statistics](research_docs/analysis_results/observed/annual_statistics.csv).*
+
+### Result C — Seasonality explains much of some weather associations; extra predictive skill is uncertain
+
+Nominal-date temperature–PM₂.₅ Pearson correlation changes from **−0.755** to **−0.077** after calendar-month adjustment; pressure changes from **+0.736** to **+0.068**. The corresponding adjusted humidity, wind and rainfall correlations are approximately **−0.328, −0.260 and −0.184**.
+
+![Raw and adjusted weather associations](research_docs/analysis_results/weather/weather_correlation_heatmap.png)
+
+**Meaning:** Strong raw temperature and pressure relationships largely reflect shared seasonal structure in this analysis. The remaining associations are descriptive; they do not identify the causal effect of changing weather or emissions. All explored lags and date offsets are retained, rather than selecting the most favorable relationship.
+
+The prediction experiment starts with 2016–2017 training, then uses **monthly expanding refits** and daily observed lag updates. Fixed-alpha Ridge uses PM₂.₅ lags and calendar terms, with preprocessing fitted within each training fold. The primary weather branch uses **two-day-lagged UTC weather**: previous-UTC-day weather can overlap the beginning of a local target day. This conservative lag is an information-timing choice, not the lag with the best retrospective score. Actual publication latency is still unverified.
+
+**2020–2021 retrospective one-day comparisons on the same 670 observed days**
+
+| Model | MAE, µg/m³ | RMSE, µg/m³ | R² |
+|---|---:|---:|---:|
+| Previous-day persistence | 19.90 | 29.51 | 0.815 |
+| Training-only calendar climatology | 25.56 | 37.00 | 0.709 |
+| 365-day seasonal baseline | 34.10 | 49.26 | 0.484 |
+| Ridge: PM₂.₅ lags + calendar | 18.84 | **27.74** | 0.836 |
+| Ridge + conservative lag-two weather | **18.77** | **27.48** | 0.839 |
+
+![Daily prediction comparison with timing and sample qualifications](research_docs/analysis_results/weather/daily_model_comparison.png)
+
+On **697 paired core/weather days**, the primary weather-minus-core RMSE difference is **−0.325 µg/m³**, with a 30-day block interval of **[−0.810, +0.382]**. This paired set differs from the 670-day all-model comparison because some baselines lack previous observations. The MAE interval also spans zero.
+
+**Meaning:** The calendar/lag model improves on persistence in these inspected diagnostics, but **additional weather benefit is not established in the later period** under the conservative timing design. Lag-one weather produces better-looking numbers but can include overlapping target-day information. No universal best model, untouched-test certification or deployable forecast is claimed.
+
+*Evidence: [methods and findings](research_docs/analysis_results/weather/findings.md) · [all model/year metrics](research_docs/analysis_results/weather/daily_metrics.csv) · [paired uncertainty](research_docs/analysis_results/weather/weather_increment_uncertainty.csv) · [lag/date sensitivity](research_docs/analysis_results/weather/associations_and_lags.csv).*
+
+### Result D — HyAQMet follows observed variation, but correlation does not remove concentration bias
+
+For **1,752 paired 2017–2021 days**, the nominal BST-day comparison of HyAQMet CAMS PM₂.₅ with the embassy reference gives:
+
+| Diagnostic | Result |
+|---|---:|
+| Pearson correlation | **0.897** |
+| Bias, regional model minus point reference | **+16.15 µg/m³** |
+| MAE | 24.98 µg/m³ |
+| RMSE | **34.23 µg/m³** |
+
+![Conditional regional-product and embassy-reference comparison](research_docs/analysis_results/reference/independent_reference_comparison.png)
+
+Monthly means use **identical available reference days** and a ≥75% matched-day coverage rule: **57 months** qualify, with correlation **0.955** and RMSE **24.59 µg/m³**. The nominal post-monsoon October–November bias is approximately **+42.59 µg/m³**, so pooled scores hide seasonal error differences.
+
+**Meaning:** A product can track variation closely while reporting systematically different concentrations. This is a conditional regional-product/point-monitor comparison, with differing spatial support. BST/UTC aggregation and ±1-day sensitivities remain visible; they are not a fitted timezone correction. A partial-period hourly AirNow mirror supports local daily labels—523 of 530 daily means match closely—but does not certify all years' QA or constitute another independent station.
+
+*Evidence: [reference metrics](research_docs/analysis_results/reference/reference_metrics.csv) · [matched monthly comparison](research_docs/analysis_results/reference/matched_monthly_comparison.png) · [daily alignment sensitivities](research_docs/analysis_results/reference/daily_alignment_sensitivity.csv) · [methods and limits](research_docs/analysis_results/reference/findings.md).*
+
+### Result E — Reproducing the final HyAQMet release reveals both useful consistency and unresolved discrepancies
+
+The final deposited release reproduces **52,584 hourly rows and 42 fields** for 2017–2022, with no expected-hour gaps or missing numeric cells. The fields include time encodings and labels, not 42 independent physical measurements. CAMS has **17,528 native three-hourly source records** before hourly interpolation.
+
+![HyAQMet regional-product climatology](research_docs/analysis_results/hyaqmet/pollutant_climatology.png)
+
+| Reproduction check | What the downloaded release shows |
+|---|---|
+| BLH–PM₂.₅ relationship | Direct hourly Pearson **−0.4904**, compared with **−0.65** printed in the paper; the reason remains unresolved. The lowest/highest BLH-decile mean contrast is **3.036×**, consistent with its approximate threefold description. |
+| Six-season definitions | Released labels disagree with paper Table 3 at **13,968 hours**, while matching the public notebook's alternative dates. Codes are 1–6 in the release versus 0–5 described in the paper. **Both definitions are reported separately**; calendar months remain primary. |
+| Precipitation | The final `precip_mm` field equals the source extract. Summing it as hourly water amounts yields **20,142–33,893 mm/year**, a strong accumulation-versus-rate warning. No corrected rainfall total is certified. |
+| Solar radiation | The final maximum is **983.657 W/m²**, with no 01:00–04:00 BST values above 0.01 W/m². A downstream correction is present despite the raw-source description issue. |
+| Collinearity | Centered maximum VIF falls from about **430,024** across 26 source candidates to **25.27** across 13 retained fields. This is a diagnostic of published sets, not proof of optimal selection or freedom from collinearity. |
+| MERRA particulate proxy | The four-component sum is not a complete independently measured PM₂.₅ reference. BLH-scaled variants remain constructed sensitivity proxies, not validated calibration or source apportionment. |
+
+![HyAQMet precipitation diagnostic and final solar cycle](research_docs/analysis_results/hyaqmet/data_quality.png)
+
+![BLH association and within-year/month sensitivity](research_docs/analysis_results/hyaqmet/blh_association.png)
+
+**Meaning:** The release supports reproducible regional-product analyses, but a published flat file still requires checking units, accumulation conventions and definitions. Interpolation does not add independent observations; physical plausibility is not causal identification. The precipitation and season discrepancies are **exposed rather than silently repaired**, and no comparison between model products is presented as independent station validation.
+
+*Evidence: [final-release findings](research_docs/analysis_results/hyaqmet/findings.md) · [source-field checks](research_docs/analysis_results/hyaqmet/final_vs_source_checks.csv) · [season cross-tabulation](research_docs/analysis_results/hyaqmet/released_vs_paper_season_counts.csv) · [precipitation diagnostic](research_docs/analysis_results/hyaqmet/annual_precipitation_diagnostic.csv) · [particulate sensitivities](research_docs/analysis_results/hyaqmet/pm25_intercomparison.csv).*
+
+## 3. What happened to the original 2000–2025 archive?
+
+The original Mendeley V2 CSV is now **identified by an exact published-checksum match**, but a known depositor is not proof of instrument lineage. Its Dhaka monthly means reproduce all **311 overlapping archived monthly values**. A clear construction boundary occurs on **4 August 2022**, not in the same form in HyAQMet's source series.
+
+All **312 sampled PM₂.₅ hours** across four disjoint 2022–2025 windows match Open-Meteo `cams_global` at the same UTC-labelled times; PM₁₀ and ozone also match. This is strong common-model-lineage evidence for the sampled later segment—not certification of every row or the depositor's acquisition code. It does not explain the earlier history or assign earlier units/timezone.
+
+The audit also finds identical Dhaka/Azimpur values across **28,968 overlapping hours**. Archived counts match their pooled row counts, whereas monthly means follow Dhaka alone. December 2025 has no original target, and November is partial. The repaired pipeline preserves source/coverage flags and avoids fabricating that target. Early generation/acquisition remains unresolved.
+
+![Rebuilt archive source regimes and valid temporal coverage](research_docs/rebuilt_results/coverage_and_regime.png)
+
+**Meaning:** The long archive is useful for a provenance investigation and a labelled model-product pilot. It cannot support a verified 26-year measured-pollution trend or a pollution-collapse narrative. It remains separate from the observed-reference results above.
+
+*Evidence: [public source recovery](research_docs/ONLINE_SOURCE_RECOVERY.md) · [source manifest](research_docs/source_metadata/source_manifest.json) · [API fingerprint requests/counts](research_docs/source_metadata/online_recovery/openmeteo_fingerprints.json) · [rebuilt run report](research_docs/rebuilt_results/RUN_REPORT.md).*
+
+## 4. Sources, methods and present limitations
+
+| Evidence or method | Role and qualification |
+|---|---|
+| EPA-hosted embassy daily PM₂.₅, 2016–2021 | Published observed figure-support data, not recovered original hourly QA logs; one monitored location. Exact full-record daily rules remain open. |
+| NASA POWER/MERRA-2 weather, 2016–2021 | Documented UTC daily meteorology at the embassy coordinates; model-derived and distinct from the old ERA5 export. Lag two reduces day-overlap risk but does not establish release latency. |
+| HyAQMet final release, 2017–2022 | Regional reanalysis reproduction and conditional monitor comparison; native support, source conversions and accumulation concerns remain explicit. |
+| Trend and uncertainty | Monthly coverage screen, seasonal adjustment, Theil–Sen and 6/12-month residual blocks; conditional intervals over six years, not climate attribution. |
+| Prediction | Fixed regularization, training-fold preprocessing and monthly expanding refits; retrospectively inspected historical dates, not a newly untouched prospective test. |
+| Original archive | Exact deposited-byte identity and bounded later-source fingerprints; early generation, source transition and old climate extraction are not fully recovered. |
+| Scope of conclusions | No causal weather/emissions effects, health outcomes, personal exposure, intra-urban risk maps or emission-source apportionment were estimated. |
+
+**Main research conclusion:** The available observed record supports pronounced seasonality, but not an established increasing short-period trend. Calendar and pollutant persistence are strong predictors; extra conservative-lag weather skill remains uncertain in 2020–2021. HyAQMet tracks much of the observed variation while retaining concentration differences and processing questions that correlation alone cannot resolve.
+
+## 5. Research materials and reproducibility
+
+| Research component | Methods and results | Tables and figures |
+|---|---|---|
+| Observed coverage, climatology, episodes and trend | [Observed findings](research_docs/analysis_results/observed/methods_findings.md) | [Observed outputs](research_docs/analysis_results/observed/) |
+| Weather associations and retrospective prediction | [Weather findings](research_docs/analysis_results/weather/findings.md) | [Predictions, metrics and figures](research_docs/analysis_results/weather/) |
+| Conditional monitor comparison | [Reference findings](research_docs/analysis_results/reference/findings.md) | [Pairing, uncertainty and figures](research_docs/analysis_results/reference/) |
+| HyAQMet final-release reproduction | [HyAQMet findings](research_docs/analysis_results/hyaqmet/findings.md) | [Diagnostics and figures](research_docs/analysis_results/hyaqmet/) |
+| Original archive reconstruction | [Run report](research_docs/rebuilt_results/RUN_REPORT.md) | [Rebuilt data and audits](research_docs/rebuilt_results/) |
+
+**Reports:** [Detailed research report](research_docs/analysis_results/ANALYSIS_REPORT.md) · [Typeset report PDF](research_docs/analysis_results/ANALYSIS_REPORT.pdf) · [Portable summary and figure collection](research_docs/analysis_results/ANALYSIS_FIGURES.pdf) · [Executed analysis inventory](research_docs/analysis_results/analysis_inventory.json).
+
+From the repository root, prepare Python 3.12 and the pinned environment:
 
 ```bash
 uv venv --python 3.12 .venv
 uv pip sync --python .venv/bin/python --require-hashes requirements.lock
 uv pip install --python .venv/bin/python --no-deps -e .
 .venv/bin/python -m unittest discover -s tests -v
-.venv/bin/python -m dhaka_air_quality \
-  --input "/path/to/original/AQI Bangladesh.csv" \
-  --climate Phase_3_Climate_Integration/data/raw/Dhaka_RemoteSensing_Climate_v8_2_2000_2025.csv \
-  --archived-monthly Phase_3_Climate_Integration/data/processed/Dhaka_Air_Climate_Feature_Engineered_2000_2025.csv \
-  --output artifacts/rebuilt
 ```
 
-`--input` also accepts the original ZIP; it reads the unambiguous CSV member without extracting it. The source archive is not bundled. Obtain the cited deposited version and preserve its original bytes/licence. Attribution is attached automatically only when its CSV hash matches the inspected upload. A fresh download's byte identity has not been established. Choose a new output directory for another run; existing nonempty output directories are preserved. To run without a figure, add `--no-figure`.
+Follow [REPRODUCE.md](research_docs/analysis_results/REPRODUCE.md) for public-source acquisition, the four analysis tracks and report generation. [Project metadata](pyproject.toml), the [hash-pinned dependency file](requirements.lock) and input/script manifests record the computational environment. Original inputs and historical exports are preserved; analysis commands use fresh output directories. Tests and successful reproduction establish computational behavior, not missing station QA or original acquisition history.
 
-Outputs include rebuilt monthly data, source/coverage audit, raw-to-archived reconciliation, training-fold predictions, model-specific and common-case metrics, a run manifest with input/code hashes, a data dictionary, and a run report. [Reviewed run snapshot](research_docs/rebuilt_results/RUN_REPORT.md) contains the actual local execution; [metrics](research_docs/rebuilt_results/metrics.csv) use14 rolling historical prediction months, September2024–October2025. These are exploratory retrospective results, not an untouched-test or operational forecasting certification.
+### Historical exports retained for traceability
 
-### What changed computationally
+[Phase 2 pollution dynamics](Phase_2_Pollution_Dynamics/) · [Phase 3 legacy climate integration](Phase_3_Climate_Integration/) · [Phase 3 legacy model splits and scores](Phase_3_Modeling/). These are archived computations, **not the primary results presented above**. See [repair scope and evidence requirements](research_docs/REPAIR_PLAN_AND_DATA_REQUIREMENTS.md) and [depositor questions](research_docs/QUESTIONS_FOR_DATA_DEPOSITOR.md) for unresolved original-source issues.
 
-- Exact Dhaka selection and one unique city timestamp per hour; do not count identical Azimpur data as a second independent monitor. Conflicting same-city rows require adjudication instead of arbitrary averaging.
-- 311 observed-span monthly rows; no appended December2025 target. November2025 is partial. August2022 remains a mixed-regime diagnostic month. Source-qualified exploratory cohort:38 complete later-regime months, September2022–October2025, with no PM2.5>PM10 flags.
-- Earlier/mixed/partial records remain visible for audit but excluded from the primary pilot. A cohort flag does not certify the later product as measured pollution.
-- Calendar-aware backward lags, train-fold imputation/scaling, fixed-alpha regularized regression, persistence, seasonal-naive and training-only calendar climatology. Archived all-period anomalies and same-month predictors are excluded.
-- Optional weather comparison uses previous-month variables only. Satellite values are retained for coverage inspection, not included in this tiny pilot. No unsupported early sensor backfill or causal/health interpretation.
-- Immutable old exports; versioned code and result snapshots distinguish repaired computations from archived results.
+## 6. Source credit
 
-In the rebuilt pilot, calendar climatology RMSE10.97 and lag/calendar Ridge10.98 outperform the lagged-weather Ridge11.71; all share the same14 cases. This limited comparison does **not** establish that weather is generally unhelpful. It provides no justification to claim weather adds skill in this pilot or to expand a model tournament without new evidence. Target units and actual publication latency remain unverified. These new scores use different dates and inputs from the archived model table and should not be compared as a like-for-like accuracy improvement.
+- **Barua, A.; Basak Shuvo, M.; Ali, S.; Khan, A. U.; and Saad, A. M.** *HyAQMet: Hourly Air Quality and Meteorology Dataset for Dhaka*, Geoscience Data Journal, [doi:10.1002/gdj3.70111](https://doi.org/10.1002/gdj3.70111). The dataset by **Adity Barua and Mrinal Basak Shuvo** is available at [Zenodo doi:10.5281/zenodo.20705735](https://doi.org/10.5281/zenodo.20705735), CC BY 4.0; [original processing repository](https://github.com/AdityBarua10/HyAQMet).
+- **Golam Sarwar / U.S. EPA research data.** *Characterizing variations in ambient PM₂.₅ concentrations at the U.S. Embassy in Dhaka, Bangladesh using observations and the CMAQ modeling system*, [doi:10.23719/1528454](https://doi.org/10.23719/1528454). This study uses the published observed columns, not CMAQ or weather-normalized columns as observations.
+- **NASA POWER / MERRA-2.** Daily meteorology from the [NASA POWER API](https://power.larc.nasa.gov/); [exact request, units and checksum](research_docs/source_metadata/online_recovery/nasa_power_embassy_2016_2021_manifest.json).
+- **AirNow DOS observation providers; secondary archive by Ryza Rynazal.** [Hourly PM₂.₅ concentrations for 12 cities, doi:10.6084/m9.figshare.12687695.v2](https://doi.org/10.6084/m9.figshare.12687695.v2), used for a station-day convention sensitivity—not another independent site. [Recovery and attribution details](research_docs/ONLINE_SOURCE_RECOVERY.md).
+- **Paul, Tapon (2026).** *Bangladesh Air Quality Index (AQI) Dataset (2000–2025): Historical Hourly Air Pollution Data Across 103 Cities*, Mendeley Data V2, [doi:10.17632/9j447cynb9.2](https://doi.org/10.17632/9j447cynb9.2), CC BY 4.0. The title claims 103 cities; the deposited pollutant CSV contains 30 city names and its separate location metadata has 103 rows.
+- **Open-Meteo and CAMS data providers.** [Air Quality API](https://open-meteo.com/en/docs/air-quality-api), used for bounded source-fingerprint checks. CAMS Global archives and CAMS EAC4 reanalysis are related product families, not interchangeable datasets.
 
-### Paper-inspired practices and remaining evidence
-
-Following HyAQMet's useful practices, retain native sources, product/version identifiers, units, geographical support, timestamp conventions and executable processing. Do not equate reanalysis intercomparison with independent station validation, increase sample size by interpolation, or copy unverified rainfall/radiation/gas conversion code. This repair does not merge HyAQMet or repair either paper's upstream source files.
-
-The [source manifest](research_docs/source_metadata/source_manifest.json) and [official Mendeley metadata snapshot](research_docs/source_metadata/mendeley_v2_public_metadata.json) distinguish depositor claims from verified file properties. Still needed: acquisition/generation code and segment-specific metadata from the depositor, the actual climate/satellite extraction script and independent DoE/US Embassy monitor data where available. No secret values are needed in chat. Prior source uncertainties and historical tables below remain archival context.
-
----
-
-
-**Legacy archive context:** Dhaka, Bangladesh · January 2000–December 2025 · 312 archived monthly rows, including an imputed final month. The rebuilt dataset above has 311 monthly rows through November 2025.
-**Research status (27 October 2026): Exploratory results available; historical data provenance, source harmonization and independent validation are ongoing.**  
-**Type:** Independent environmental data-science research; not a peer-reviewed publication or a validated estimate of health outcomes.
-
-> **Read this before interpreting the figures.** The processed PM2.5 series has an abrupt change around **August 2022**. The July 2022 monthly mean is **148.02** and August is **29.65** in the uploaded feature table; the monthly `observations` field simultaneously changes from **744** to **1,392**. The source and aggregation history need verification. This discontinuity may affect reported trends, change points, correlations and model scores. **These plots are outputs of the archived data, not evidence that measured ambient pollution fell abruptly.** See [Data provenance and validation status](research_docs/DATA_PROVENANCE_AND_VALIDATION.md).
-
-## 1. Research questions
-
-1. What patterns and apparent changes appear in the archived Dhaka air-pollution series between 2000 and 2025?
-2. How do reported PM2.5 levels vary seasonally, and how sensitive are those patterns to data availability and source changes?
-3. How do satellite aerosol indicators and reanalysis weather variables co-vary with PM2.5, without assuming causation?
-4. Do statistical or machine-learning models outperform straightforward temporal baselines under chronological validation?
-5. What can the current datasets support about pollution exposure—and what **cannot** be concluded about health outcomes?
-
-## 2. Data and temporal coverage
-
-| Data group | Variables / source description | Coverage in repository | Important qualification |
-|---|---|---|---|
-| Historical air-quality archive | PM2.5, PM10, gases, AQI; uploaded/reprocessed historical air-quality records | 2000–2025 (monthly aggregates) | **Underlying source identity, station representativeness, units and harmonization not yet verified.** Do not label the entire series as government ground-monitor measurements. |
-| Earth observation | MODIS aerosol optical depth (AOD), MODIS land-surface temperature (LST), Sentinel-5P NO₂ | AOD 267/312, LST 271/312, NO₂ 91/312 monthly availability flags | Sensors have different operating periods, retrieval gaps and spatial support; flags do not prove reference accuracy. |
-| Climate/reanalysis | ERA5-Land meteorological variables (temperature, dewpoint, precipitation, pressure, wind) | Monthly feature table, 2000–2025 | Reanalysis is not a direct pollution-station observation. Extraction provenance and units remain under review. |
-| Machine-learning samples | Forecasting and attribution-design matrices | Train: 2000–2020 (252 months); validation: 2021–2023 (36); test: 2024–2025 (24) | An out-of-time split alone does not establish leak-free *operational forecasting*. Lag timing, preprocessing and changing source regimes need audit. |
-| Related comparison data (not merged) | [Albab Hasan: Bangladesh district-level weather and pollution](https://github.com/Albab-Hasan/Bangladesh-District-Level-Weather-Pollution-DataSet) | Published daily district files from August 2025 onward | OpenWeatherMap API-derived data, **not independent DoE station truth**. Different scales and AQI definitions require harmonization before comparison. |
-
-The [Bangladesh Department of Environment (DoE)](https://doe.gov.bd/pages/static-pages/6922dfba933eb65569e23b0a) publishes AQI reports that are relevant for future station-based cross-checking; **no complete match against original DoE station observations has yet been established**.
-
-## 3. Exploratory findings, with caveats
-
-### Finding A — A source-quality discontinuity dominates interpretation
-
-In the processed monthly table, annual PM2.5 means are **158.71 (2021)**, **119.01 (2022)** and **50.31 (2023)** in the dataset's reported concentration field. The pronounced shift coincides with changing row characteristics and requires source tracing. It must not be interpreted as an observed environmental recovery.
-
-![Source-transition diagnostic using the published monthly table](research_docs/figures/pm25_source_discontinuity.svg)
-
-*Figure 1. Diagnostic plot of archived monthly PM2.5 values around the suspected 2022 source boundary. The vertical marker is an audit flag, **not** a verified physical change point. [Underlying archived monthly table](Phase_3_Climate_Integration/data/processed/Dhaka_Air_Climate_Feature_Engineered_2000_2025.csv).*
-
-### Finding B — Apparent long-term and seasonal patterns
-
-The Phase 2 archives contain descriptive statistics, Mann–Kendall analysis, pollutant correlations, PCA and change-point tests. Their findings are **historical computations on the current input series**, not confirmed trends in a stable independent instrument record. The Phase 2 summary reports PM2.5–PM10 Pearson **r = 0.992**, and PCA component shares of **60.47%, 22.90% and 10.41%** for the first three components. Common data construction, autocorrelation, missing data and source changes may influence these numbers.
-
-![Annual archived PM2.5 pattern](Phase_3_Climate_Integration/figures/Figure_1_Dhaka_PM25_Annual_Trend.png)
-
-*Figure 2. Archived annual trend figure. **Data-source comparability is unverified**; do not infer a confirmed 2000–2025 atmospheric trend.*
-
-![Seasonal PM2.5 cycle](Phase_3_Climate_Integration/figures/Figure_3_Dhaka_PM25_Monthly_Seasonal_Cycle.png)
-
-*Figure 3. Exploratory monthly seasonal cycle; source regimes and monitoring coverage may bias the pooled seasonal profile.*
-
-![Monthly distributions](Phase_3_Climate_Integration/figures/Figure_4_Dhaka_PM25_Monthly_Boxplot.png)
-
-*Figure 4. Archived monthly distributions. Derived from the current mixed-provenance series.*
-
-### Finding C — Observation coverage and extreme-event screening
-
-![Observation counts](Phase_3_Climate_Integration/figures/Figure_2_Dhaka_Observation_Count.png)
-
-*Figure 5. Reported observation-count indicator. Its units and counting method must be documented before interpreting it as station availability.*
-
-![Extreme PM2.5 frequency by month](Phase_3_Climate_Integration/figures/Figure_5_Dhaka_Extreme_PM25_Frequency_by_Month.png)
-
-*Figure 6. Archived frequency of threshold-defined PM2.5 extremes, exploratory only. Threshold definition and comparable source coverage require review.*
-
-![Annual extreme frequency](Phase_3_Climate_Integration/figures/Figure_6_Dhaka_Annual_Extreme_PM25_Frequency.png)
-
-*Figure 7. Archived yearly extreme-frequency figure, not a validated change in exposure risk.*
-
-### Finding D — Climate relationships and preliminary model evaluation
-
-Pearson/Spearman correlations, partial correlations, lags and VIF analyses have been exported in [Phase 3 results](Phase_3_Climate_Integration/results/). Several predictors are collinear: archived VIF values include **dewpoint 47.86** and **temperature 33.98**. Co-variation does **not** prove pollution causation.
-
-The following scores are **as saved in the repository**, not independently rerun or publication-ready:
-
-| Archived model and track | Validation RMSE | Test RMSE | Test R² |
-|---|---:|---:|---:|
-| Linear Regression, forecasting | 38.79 | 12.21 | 0.788 |
-| Ridge, forecasting | 40.14 | 12.47 | 0.778 |
-| Random Forest, forecasting | 67.22 | 17.75 | 0.551 |
-| XGBoost, forecasting | 64.88 | 18.03 | 0.537 |
-| Linear Regression, environmental-feature attribution design | 62.69 | 68.10 | −5.609 |
-| Random Forest, environmental-feature attribution design | 60.81 | 89.51 | −10.419 |
-
-*Source: [model_evaluation_metrics.csv](Phase_3_Modeling/results/model_evaluation_metrics.csv). RMSE units inherit the unresolved target units. The environmental-feature track is **not causal attribution**. Negative R² indicates poor predictive fit relative to a constant test-mean reference. Results require clean reruns, baseline comparisons, leakage checks and source-regime tests before scientific interpretation.*
-
-## 4. Research workflow and existing outputs
-
-```text
-Historical air-quality archive (provenance audit pending)
-             + Satellite retrievals + Reanalysis
-                         |
-            Monthly alignment + availability flags
-                         |
-           Descriptive patterns / trends / PCA
-                         |
-         Climate relationships and VIF diagnostics
-                         |
-          Chronological ML train / validate / test
-                         |
-         Evaluation tables + diagnostic visualizations
-                         |
-            Independent source validation (OPEN)
-```
-
-| Folder | Contents |
-|---|---|
-| [Phase_2_Pollution_Dynamics](Phase_2_Pollution_Dynamics/) | Annual tables, trend tests, PCA, correlations, change points, methodology |
-| [Phase_3_Climate_Integration](Phase_3_Climate_Integration/) | Source/processed monthly CSVs, missingness flags, climate features, six figures and statistical results |
-| [Phase_3_Modeling](Phase_3_Modeling/) | Chronological split CSVs, stored model metrics and predictions |
-| [research_docs](research_docs/) | Source-quality warning, provenance notes, validation and future reproduction priorities |
-
-**Reproducibility status:** The numerical CSVs and selected figures are public. The complete original ground-data construction, source reconciliation, feature-engineering and model-training pipelines are **not fully reproducible from committed scripts alone**. The repository reports computed results, but this publication update did **not** independently rerun its original experiments.
-
-## 5. Health relevance versus measured health outcomes
-
-Ambient PM2.5 is relevant to human exposure and public-health research. **This project has no verified linked morbidity, mortality, hospital admission or individual exposure dataset.** It does not estimate disease burden, causal health effects or health-risk maps. Such claims would require appropriately matched health, population and exposure data and explicit uncertainty analysis.
-
-## 6. Main limitations and verification in progress
-
-- **Unresolved historical source provenance:** especially the abrupt August 2022 shift and observed-value precision/counting changes. Confirm original file lineage, station identity, timestamp definition, units and any synthetic or modeled portions.
-- **Non-comparable measurements:** distinguish DoE monitor data, Open-Meteo/CAMS products, OpenWeatherMap products, satellite retrievals and climate reanalysis. No interchangeability is assumed.
-- **Satellite missingness:** AOD and LST are incomplete; Sentinel-5P NO₂ begins much later than 2000. Avoid backfilling unsupported periods without clear models and flags.
-- **Statistical inference:** reassess trend significance with autocorrelation, seasonality, multiple testing, source breaks and uncertainty.
-- **Prediction interpretation:** rerun reproducibly with preprocessing fitted on training periods only, appropriate causal availability of lagged variables, seasonal/persistence baselines, and evaluation by regime.
-- **Health interpretation:** exposure context only; no health-outcome inference.
-- **External validation:** DoE station records and newer independent datasets have not yet been harmonized or used to validate these results.
-
-[Read the detailed provenance and verification checklist](research_docs/DATA_PROVENANCE_AND_VALIDATION.md).
-
-## 7. Related sources, credit and status
-
-- Bangladesh DoE: [Air Quality Index reports](https://doe.gov.bd/pages/static-pages/6922dfba933eb65569e23b0a) — **potential verification source**, not yet harmonized.
-- Albab Hasan: [Bangladesh District-Level Weather & Pollution Dataset](https://github.com/Albab-Hasan/Bangladesh-District-Level-Weather-Pollution-DataSet) — OpenWeatherMap daily district series since August 2025; not included in the reported figures.
-- Source data and methodology: repository files linked above. The original provenance of the long historical pollutant series remains under investigation.
-
-**Current assessment:** Exploratory analyses published; further data validation, statistical verification and reproducible reruns are ongoing. This README documents what is presently in the repository, without presenting unverified data-source differences as environmental findings.
+Original data and paper authors retain credit for their materials. This repository contributes the documented reconstruction, analyses, comparisons and limitations; reuse does not transfer dataset authorship.
