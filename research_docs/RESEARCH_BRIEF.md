@@ -1,7 +1,7 @@
 # Dhaka PM₂.₅: seasonality, regional reanalysis agreement and conditional prediction
 
-**Researcher:** Bipul Roy · **Study area:** Dhaka, Bangladesh  
-**Observed-reference period:** 2016–2021 · **HyAQMet comparison period:** 2017–2022  
+**Researcher:** Bipul Roy · **Study area:** Dhaka, Bangladesh<br>
+**Observed-reference period:** 2016–2021 · **HyAQMet comparison period:** 2017–2022<br>
 **Status:** Completed reproducible exploratory analysis; not a peer-reviewed publication or an operational forecast evaluation.
 
 [Research overview](../README.md) · [Full report](analysis_results/ANALYSIS_REPORT.md) · [Report PDF](analysis_results/ANALYSIS_REPORT.pdf) · [Figures PDF](analysis_results/ANALYSIS_FIGURES.pdf) · [Reproduce the analysis](analysis_results/REPRODUCE.md)
