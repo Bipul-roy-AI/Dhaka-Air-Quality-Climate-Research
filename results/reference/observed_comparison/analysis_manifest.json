@@ -1,0 +1,27 @@
+{
+  "assumption": "Nominal release BST calendar days compared with EPA date labels. UTC and \u00b11day sensitivity retained without selecting the best alignment from scores. Separate station-day checks support BST in part of the record; full-period averaging QA remains unresolved.",
+  "comparison_type": "Conditional paired observed-point-reference / regional-reanalysis comparison; different spatial supports, not calibration or operational/causal validation.",
+  "comparison_period": "2017-01-01 through2021-12-31",
+  "primary_alignment": "Prespecified BST daily means, shift0",
+  "shift_definition": "Model date labels are shifted by the reported number of calendar days before pairing.",
+  "primary_metrics": {
+    "n": 1752,
+    "bias": 16.150143709898778,
+    "MAE": 24.97829288828343,
+    "RMSE": 34.229553665094784,
+    "Pearson_r": 0.8972375271418193,
+    "Spearman_rho": 0.906737524684453,
+    "R2": 0.7277369374336791
+  },
+  "bootstrap": "Moving calendar blocks of7/30days; conditional sampling intervals, not measurement/model-structural uncertainty.",
+  "bootstrap_replicates": 1000,
+  "minimum_model_daily_hours": 18,
+  "minimum_monthly_paired_coverage": 0.75,
+  "monthly_mean_support": "Both model and observation use the same paired days, not their separate available-day averages.",
+  "figure_exports": "600dpi PNG; editable SVG text; PDF TrueType42 text with rasterized dense scatter only",
+  "source_hashes": {
+    "HyAQMet.csv": "420f59fd7e7cd527f1475b309411f27cb8ce4085490ca5daba4e1c517e0c4649",
+    "epa_observed_daily_calendar.csv": "2dcafb06a204dc0c13e1b7c20eb1c37af32ceba7a63eb6e6033e751f0ee1fd43"
+  },
+  "analysis_value_added": "Timestamp-paired observed station comparison beyond aggregate literature benchmarks; not a claim to have validated every variable or independent information source."
+}

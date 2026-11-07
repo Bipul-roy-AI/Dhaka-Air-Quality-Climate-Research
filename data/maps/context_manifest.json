@@ -1,0 +1,28 @@
+{
+  "source_repository": "https://github.com/nvkelso/natural-earth-vector",
+  "source_commit": "ca96624a56bd078437bca8184e78163e5039ad19",
+  "source_path": "geojson/ne_10m_admin_0_countries.geojson",
+  "source_url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/ca96624a56bd078437bca8184e78163e5039ad19/geojson/ne_10m_admin_0_countries.geojson",
+  "source_git_blob_sha1": "5ebc66e25fc1af01edaebe9375c546655e04cf1e",
+  "unmodified_source_sha256": "239eec57ac17f100a11e2536cffc56752c318b50ae765b0918ff7aab4ce8f255",
+  "unmodified_source_bytes": 13287234,
+  "source_feature_count": 258,
+  "selected_names": [
+    "Bangladesh",
+    "India",
+    "Myanmar",
+    "Nepal",
+    "Bhutan"
+  ],
+  "selected_features": 5,
+  "selection_rule": "Exact ADMIN property equals one of Bangladesh, India, Myanmar, Nepal or Bhutan; entire original country geometries retained. Only properties are reduced.",
+  "coordinate_reference_system": "WGS84 longitude,latitude (OGC:CRS84; GeoJSON convention)",
+  "geometry_changes": "None: no clipping, simplification, reprojection or coordinate rounding.",
+  "cartographic_scale": "Natural Earth 1:10m Admin 0 Countries",
+  "licence": "Public domain",
+  "licence_url": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "attribution": "Made with Natural Earth. Public domain, 1:10m Admin 0 Countries.",
+  "context_scope": "Country borders and coastlines only. No formal Dhaka city boundary, pollution surface, grid footprint or river layer.",
+  "selected_context_sha256": "b49a87ffab409f1e8c0243d31430b0057cda2bf1ad68a94aff5f06b81e62db25",
+  "selected_context_bytes": 348804
+}

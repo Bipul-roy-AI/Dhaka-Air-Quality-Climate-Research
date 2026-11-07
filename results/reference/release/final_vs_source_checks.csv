@@ -1,0 +1,7 @@
+source,field,n,exact_equal_rows,max_abs_difference
+ERA5_source_extract,precip_mm,52584,52584,0.0
+ERA5_source_extract,solar_radiation_wm2,52584,0,7427.432
+ERA5_source_extract,t2m_celsius,52584,52584,0.0
+ERA5_source_extract,wind_speed_ms,52584,52584,0.0
+native_CAMS_3hour_extract,cams_pm25_ugm3,17528,17528,0.0
+native_CAMS_3hour_extract,cams_co_mgm3,17528,17528,0.0

@@ -28,6 +28,6 @@ The [monthly reconciliation](https://github.com/Bipul-roy-AI/Dhaka-Air-Quality-C
 
 The legacy 2000–2025 atmospheric trend, apparent 2022 pollution collapse, causal climate/source attribution, pollutant PCA and model rankings are excluded. The original climate/satellite extraction was not recovered; whole-record feature construction and the changing pollutant source prevent these outputs from supporting the final claims. The smaller reconstructed monthly model experiment is a computational diagnostic rather than a validated environmental forecast.
 
-Third-party dataset reproduction and regional-product comparisons are outside the final study. Background credit is retained in the README references.
+The additional released-data component uses the exact published reanalysis release and source extracts with explicit credit. Its reproduction results and observed-reference comparisons are separated under `results/reference/` from the primary embassy/NASA-weather results. Original gridded NetCDF acquisition and conversion have not been independently repeated. This extension does not authenticate the older 2000–2025 archive.
 
 Original uploads and full intermediate runs remain separate from the published results. Reproduction of the final study uses only the documented observed-record inputs; see [REPRODUCE.md](REPRODUCE.md).

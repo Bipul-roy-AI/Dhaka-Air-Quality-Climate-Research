@@ -1,0 +1,53 @@
+variable,VIF,regression_convention,n,released_column,retained_in_final_release
+Total Surface Mass Concentration - PM2.5 (µg/m³),205.13944008272676,centered_with_intercept,52584,,False
+Black Carbon Surface Mass Concentration (µg/m³),113.40086574705832,centered_with_intercept,52584,merra_bc_surface_ugm3,True
+Organic Carbon Surface Mass Concentration (µg/m³),121.03032640671891,centered_with_intercept,52584,merra_oc_surface_ugm3,True
+SO4 Surface Mass Concentration (µg/m³),81.83277168207036,centered_with_intercept,52584,merra_so4_surface_ugm3,True
+Dust Surface Mass Concentration - PM2.5 (µg/m³),168.15089070952493,centered_with_intercept,52584,merra_dust_pm25_ugm3,True
+Total Aerosol Extinction AOT 550nm (-),430023.63686241483,centered_with_intercept,52584,merra_aot_extinction_550nm,True
+Total Aerosol Angstrom Parameter 470-870nm (-),6.257089359401263,centered_with_intercept,52584,merra_angstrom_470_870,True
+Total Column Mass Density - PM2.5 (mg/m²),743.6660932651749,centered_with_intercept,52584,,False
+Black Carbon Column Mass Density (mg/m²),2334.823151943178,centered_with_intercept,52584,,False
+Organic Carbon Column Mass Density (mg/m²),113.29073977344885,centered_with_intercept,52584,,False
+SO4 Column Mass Density (mg/m²),140.16803922564557,centered_with_intercept,52584,,False
+Dust Column Mass Density - PM2.5 (mg/m²),123322.66201311232,centered_with_intercept,52584,,False
+Surface Wind Speed (m/s),1.9240108178344904,centered_with_intercept,52584,merra_wind_speed_ms,True
+2-meter Air Temperature (°C),4.947237481783598,centered_with_intercept,52584,,False
+Surface Specific Humidity (g/kg),5.9626451147410116,centered_with_intercept,52584,merra_specific_humidity_gkg,True
+Surface Pressure (hPa),4.679571416604562,centered_with_intercept,52584,,False
+Total Surface Precipitation (mm/hr),1.1996897382530904,centered_with_intercept,52584,merra_precip_mmhr,True
+Dust Scattering AOT 550nm - PM1.0 (-),58574.00076265807,centered_with_intercept,52584,,False
+Dust Column Mass Density - Total (mg/m²),14040.51059229918,centered_with_intercept,52584,,False
+SO2 Column Mass Density (mg/m²),5.638014372950635,centered_with_intercept,52584,merra_so2_col_mgm2,True
+Total Aerosol Scattering AOT 550nm (-),381746.4430120605,centered_with_intercept,52584,,False
+Total Column Ozone (DU),1.7446087217031658,centered_with_intercept,52584,merra_col_ozone_du,True
+Dust Surface Mass Concentration - Total (µg/m³),142.32798051489175,centered_with_intercept,52584,,False
+Dust Extinction AOT 550nm - PM2.5 (-),240290.36942495106,centered_with_intercept,52584,merra_dust_ext_aot_pm25,True
+Dust Extinction AOT 550nm - Total (-),152241.7276169556,centered_with_intercept,52584,,False
+SO2 Surface Mass Concentration (µg/m³),4.872363189932521,centered_with_intercept,52584,merra_so2_surface_ugm3,True
+Total Surface Mass Concentration - PM2.5 (µg/m³),660.5263861755506,uncentered_no_intercept_notebook,52584,,False
+Black Carbon Surface Mass Concentration (µg/m³),256.91034449607446,uncentered_no_intercept_notebook,52584,merra_bc_surface_ugm3,True
+Organic Carbon Surface Mass Concentration (µg/m³),304.9919742845736,uncentered_no_intercept_notebook,52584,merra_oc_surface_ugm3,True
+SO4 Surface Mass Concentration (µg/m³),151.51270536700972,uncentered_no_intercept_notebook,52584,merra_so4_surface_ugm3,True
+Dust Surface Mass Concentration - PM2.5 (µg/m³),353.6112005026692,uncentered_no_intercept_notebook,52584,merra_dust_pm25_ugm3,True
+Total Aerosol Extinction AOT 550nm (-),1598138.4513872305,uncentered_no_intercept_notebook,52584,merra_aot_extinction_550nm,True
+Total Aerosol Angstrom Parameter 470-870nm (-),76.01124605376988,uncentered_no_intercept_notebook,52584,merra_angstrom_470_870,True
+Total Column Mass Density - PM2.5 (mg/m²),2332.7914494019346,uncentered_no_intercept_notebook,52584,,False
+Black Carbon Column Mass Density (mg/m²),6366.521409808585,uncentered_no_intercept_notebook,52584,,False
+Organic Carbon Column Mass Density (mg/m²),256.6213230217993,uncentered_no_intercept_notebook,52584,,False
+SO4 Column Mass Density (mg/m²),384.11736050500537,uncentered_no_intercept_notebook,52584,,False
+Dust Column Mass Density - PM2.5 (mg/m²),228285.78288826215,uncentered_no_intercept_notebook,52584,,False
+Surface Wind Speed (m/s),9.475197278710878,uncentered_no_intercept_notebook,52584,merra_wind_speed_ms,True
+2-meter Air Temperature (°C),100.47721151703746,uncentered_no_intercept_notebook,52584,,False
+Surface Specific Humidity (g/kg),40.30587066724285,uncentered_no_intercept_notebook,52584,merra_specific_humidity_gkg,True
+Surface Pressure (hPa),711.5133839256054,uncentered_no_intercept_notebook,52584,,False
+Total Surface Precipitation (mm/hr),1.2815264845207712,uncentered_no_intercept_notebook,52584,merra_precip_mmhr,True
+Dust Scattering AOT 550nm - PM1.0 (-),110311.52117988194,uncentered_no_intercept_notebook,52584,,False
+Dust Column Mass Density - Total (mg/m²),23793.364228889583,uncentered_no_intercept_notebook,52584,,False
+SO2 Column Mass Density (mg/m²),14.540123237605062,uncentered_no_intercept_notebook,52584,merra_so2_col_mgm2,True
+Total Aerosol Scattering AOT 550nm (-),1402454.885596158,uncentered_no_intercept_notebook,52584,,False
+Total Column Ozone (DU),492.01026197960016,uncentered_no_intercept_notebook,52584,merra_col_ozone_du,True
+Dust Surface Mass Concentration - Total (µg/m³),276.61322093099204,uncentered_no_intercept_notebook,52584,,False
+Dust Extinction AOT 550nm - PM2.5 (-),448852.3976266111,uncentered_no_intercept_notebook,52584,merra_dust_ext_aot_pm25,True
+Dust Extinction AOT 550nm - Total (-),272855.71522339684,uncentered_no_intercept_notebook,52584,,False
+SO2 Surface Mass Concentration (µg/m³),13.665283315493175,uncentered_no_intercept_notebook,52584,merra_so2_surface_ugm3,True

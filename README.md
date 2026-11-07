@@ -1,4 +1,4 @@
-# Seasonal PM₂.₅ Patterns and Meteorological Associations in Dhaka, Bangladesh
+# Seasonal PM₂.₅, Meteorology and Reanalysis Agreement in Dhaka, Bangladesh
 
 ## 1. Introduction and objectives
 
@@ -9,6 +9,7 @@ Objectives:
 1. Quantify observed PM₂.₅ coverage, seasonal variation and short-period trend uncertainty.
 2. Examine weather associations after calendar adjustment and evaluate conservative retrospective prediction against temporal baselines.
 3. Describe observed high-pollution episodes and test the sensitivity of conclusions to coverage, seasonal calendars and evaluation period.
+4. Reproduce selected analyses using the published ERA5-Land, ERA5, CAMS EAC4 and MERRA-2 extracts, and compare regional PM₂.₅ with the observed point record.
 
 ## 2. Data and methods
 
@@ -19,6 +20,10 @@ Observed concentrations were extracted from the observed columns of EPA-hosted f
 NASA POWER supplied UTC daily temperature, dewpoint, relative humidity, wind, precipitation and pressure at the embassy coordinates (23.796374° N, 90.424614° E) for the same 2,192 days [2]. All six fields were complete. These are model-derived meteorological estimates, with native units preserved; this acquisition is separate from the earlier climate/satellite table.
 
 The earlier 2000–2025 archive [6] was excluded from environmental trend and prediction claims because its measurement lineage, units and timezone remain unresolved and its numerical characteristics change sharply on **4 August 2022**. That boundary does not establish a real pollution decrease. Its computational audit is retained in [data-selection notes](DATA_SELECTION.md).
+
+![Bangladesh study-area map with Dhaka reference locations](figures/study_area.png)
+
+The simple location map uses public-domain Natural Earth country context [8], reported embassy coordinates and the source paper’s approximate Dhaka reference point. It shows locations rather than a pollution surface or city boundary. [Editable SVG](figures/study_area.svg) · [Figure PDF](figures/study_area.pdf).
 
 ### 2.2 Descriptive and statistical analysis
 
@@ -33,6 +38,21 @@ Pearson/Spearman weather associations were examined with calendar-month and year
 Ridge regression, a regularized linear model with fixed penalty α = 1, used PM₂.₅ lags 1/7/365, annual sine/cosine terms and training-fold median imputation/scaling. Initial training covered 2016–2017, followed by monthly expanding refits and daily observed-lag updates. The weather extension used two-day-lagged UTC temperature, humidity, wind, rainfall and pressure. This avoids previous-UTC-day overlap with a local target day; actual publication latency remains unverified.
 
 Model comparisons used identical observed dates. Weather-increment intervals used 1,000 paired seven-/30-day calendar-block replicates. Both historical evaluation periods were inspected retrospectively. A secondary hourly AirNow archive [3] informed daily-label interpretation: 523 of 530 daily means matched within 0.0001 µg/m³ under local labels. This is a check on the same station, rather than another monitoring site, and does not certify the full record’s averaging or quality rules.
+
+### 2.4 Published reanalysis data and reproduction
+
+The additional analysis uses the authors’ exact Zenodo release [7] and the three published source CSVs at Git commit `f23ee72d6bbec8a8ab36423295e14f1b8e3d4100` [5]. All three source files match that commit byte for byte. These products assimilate observations but are **reanalyses, not direct MODIS or Sentinel satellite retrievals**.
+
+| Product | Provider | Stated grid | Native time step | Variables used |
+|---|---|---|---|---|
+| ERA5-Land | ECMWF / Copernicus CDS | 0.1° | Hourly | Nine meteorological fields, including derived humidity/wind quantities |
+| ERA5 Single Levels | ECMWF / Copernicus CDS | 0.25° | Hourly | Boundary-layer height and cloud cover |
+| CAMS EAC4 | ECMWF / Copernicus ADS | 0.75° | Three-hourly | Six pollutants and dust aerosol optical depth |
+| MERRA-2 | NASA GES DISC | 0.5° × 0.625° | Hourly | 26 source candidates; 13 retained aerosol/meteorological fields |
+
+The release covers **2017–2022**, with **52,584 hourly rows and 42 fields**, including timestamps and derived time encodings. Its 17,528 native CAMS records were interpolated to the hourly grid. The public files contain spatially aggregated extracts; original gridded NetCDF acquisition and upstream conversions have not been independently repeated. The exact original MERRA-2 grid node is not recoverable from the CSV coordinates.
+
+Reproduction includes monthly and local-hour climatologies, source-to-source meteorological and pollutant comparisons, centered/uncentered VIF diagnostics, boundary-layer associations and both six-season definitions. Published values remain unchanged. The observed-reference extension uses 2017–2021 daily pairs, retains BST/UTC and ±1-day alternatives, and computes monthly means on identical paired days with at least 75% coverage. Seven-/30-day calendar-block intervals describe conditional pairing uncertainty. This comparison does not calibrate the regional product or certify all released variables.
 
 ## 3. Results
 
@@ -135,11 +155,58 @@ Calendar/lag Ridge improved on persistence in this inspected comparison. Added w
 
 Negative differences favor added weather. The earlier period shows an improvement under this conditional interval, but the later interval spans zero, so later-period incremental benefit is **not established**. The paired core/weather cases differ from the 670-day all-model intersection. The later-period MAE interval also spans zero. This period dependence limits claims of generalizable weather skill. [Model metrics](results/models.csv) and [paired uncertainty](results/weather_increment.csv).
 
+### 3.7 Results using the same published reanalysis datasets
+
+These are **credited reproductions and extensions using the released data**, not a claim to have created the source dataset [5,7].
+
+| Published claim or diagnostic | Reproduced result | Interpretation |
+|---|---|---|
+| 52,584 rows, 42 fields, no missing expected hours | Exact structural match | Completeness describes model output, not station coverage |
+| CAMS mean PM₂.₅, 2017–2022: 102.3 µg/m³ | **102.333 µg/m³** | Matches at the reported precision |
+| Lowest/highest boundary-layer-height decile contrast: about 3× | **3.036×** | Approximate contrast reproduced |
+| Hourly BLH–CAMS PM₂.₅ correlation: −0.65 | **−0.4904** | Printed correlation not reproduced by the direct released-column calculation |
+| 26 MERRA candidates reduced to 13 retained fields | Counts reproduced | Published selection is inspected, rather than optimized anew |
+| Retained MERRA VIF <100 | Maximum **25.27 centered**, **95.87 uncentered** | Convention matters; neither implies absent collinearity |
+| Paper/release season labels agree | **13,968 hourly disagreements** | Both calendars retained separately |
+
+![Monthly and local-hour pollutant climatologies from the published reanalysis release](figures/reference/pollutant_climatology.png)
+
+The released composition products show pronounced monthly and diurnal structure. These curves describe regional model fields and interpolated hourly labels. [Month climatology](results/reference/release/pollutant_calendar_month_climatology.csv), [local-hour climatology](results/reference/release/pollutant_local_hour_climatology.csv) and [claim-by-claim comparison](results/reference/release/paper_vs_reproduced.csv).
+
+![Boundary-layer-height associations reproduced from the released data](figures/reference/blh_association.png)
+
+The daily BLH–PM₂.₅ correlation is **−0.5069**, attenuating to **−0.2020** after within-year/month adjustment. Shared timing and model structure matter; this is not an isolated causal mixing effect. [BLH diagnostics](results/reference/release/blh_associations.csv).
+
+![Regional CAMS PM2.5 and MERRA component-proxy comparison](figures/reference/pm25_cross_source.png)
+
+The MERRA four-component proxy mean is **37.402 µg/m³**, versus CAMS **102.333 µg/m³**. The component sum is not chemically complete measured PM₂.₅. Raw and BLH-scaled variants, including the notebook’s 50 m floor, remain separately labelled constructed sensitivities. [PM comparisons](results/reference/release/pm25_intercomparison.csv), [native three-hour sensitivity](results/reference/release/pm25_native_3hour_sensitivity.csv), and [meteorology/SO₂ comparisons](results/reference/release/meteorology_and_so2_intercomparison.csv).
+
+The released precipitation field sums to **20,142–33,893 mm/year if interpreted as hourly water amounts**, indicating unresolved accumulation semantics. Those are diagnostic sums, not certified rainfall totals. The suspect field is preserved and flagged, and was not used in the earlier NASA-weather prediction experiment. [Precipitation diagnostic](results/reference/release/annual_precipitation_diagnostic.csv) and [source/quality record](results/reference/release/quality_and_provenance.json).
+
+### 3.8 Regional reanalysis versus the observed reference
+
+| Nominal BST daily comparison, 2017–2021 | Result |
+|---|---:|
+| Paired days | **1,752** |
+| Pearson r | **0.897** |
+| Bias, CAMS minus observation | **+16.15 µg/m³** |
+| MAE | **24.98 µg/m³** |
+| RMSE | **34.23 µg/m³** |
+| 30-day block 95% interval for bias | **+11.74 to +20.75 µg/m³** |
+
+![Regional reanalysis and observed embassy daily PM2.5 comparison](figures/reference/independent_reference_comparison.png)
+
+Strong correlation coexists with positive concentration bias. On **57 eligible months**, using the same paired days for both means, r is **0.955** and RMSE is **24.59 µg/m³**. Regional spatial support differs from a point monitor; the timing alternatives and uncertainty remain explicit. [Reference metrics](results/reference/observed_comparison/reference_metrics.csv), [alignment sensitivities](results/reference/observed_comparison/daily_alignment_sensitivity.csv) and [conditional intervals](results/reference/observed_comparison/block_uncertainty.json).
+
+All new map and reproduction figures are available as **600 dpi PNG, editable SVG and figure-only PDF** in [figures](figures) and [reference exports](figures/reference). No manuscript PDF is generated. [Reproduction commands](REPRODUCE.md) and the [export/source manifest](results/reference/export_manifest.json) document how to rebuild them.
+
 ## 4. Discussion and limitations
 
 The clearest findings are the large seasonal contrast and frequent high daily concentrations at the monitored location. Apparent temperature and pressure relationships largely attenuate after calendar adjustment. Temporal structure provides useful prediction baselines, while incremental weather skill varies between periods.
 
 The embassy series represents one location, with incompletely recovered daily quality-assurance and averaging rules. Coverage screens cannot eliminate bias from non-random missingness. NASA days are UTC; lag-two weather reduces interval-overlap risk but does not demonstrate operational release availability. Model evaluation is retrospective, with conditional block intervals and six years of observations. The earlier archive cannot extend this record into a verified 26-year monitoring study. No causal emissions, health-outcome, personal-exposure, source-apportionment or climate-change attribution claims follow from these data.
+
+The additional reanalysis analysis reproduces selected results from the public processed release, not every original extraction step. Interpolation does not add independent samples. Regional-product agreement and station correlation do not resolve concentration bias, accumulation metadata or unknown full-period monitor quality. The paper/release discrepancies remain visible rather than being adjusted to force matching results.
 
 ## 5. Further research
 
@@ -147,7 +214,7 @@ Priority work is to verify station-day quality rules and publication latency, ob
 
 ## 6. Conclusion
 
-Dhaka’s available observed record shows pronounced seasonal PM₂.₅ variation, with winter concentrations about five times the monsoon mean and frequent exceedance of the retrospective daily benchmark. The short-period trend remains uncertain. Calendar and pollutant persistence explain substantial predictive structure, while conservative weather additions do not establish later-period incremental benefit. These results support a focused, reproducible account of the 2016–2021 monitored period.
+Dhaka’s available observed record shows pronounced seasonal PM₂.₅ variation, with winter concentrations about five times the monsoon mean and frequent exceedance of the retrospective daily benchmark. The short-period trend remains uncertain. Calendar and pollutant persistence explain substantial predictive structure, while conservative weather additions do not establish later-period incremental benefit. The released reanalysis tracks much observed variation but has positive concentration bias; selected published results reproduce while others differ. These results support a reproducible account of the monitored period and a clearly attributed assessment of the published regional dataset.
 
 ## 7. References
 
@@ -155,5 +222,7 @@ Dhaka’s available observed record shows pronounced seasonal PM₂.₅ variatio
 2. **NASA POWER.** Daily meteorological data and API documentation. [Official POWER portal](https://power.larc.nasa.gov/).
 3. **Rynazal, Ryza.** *Hourly PM₂.₅ concentrations for 12 cities*, secondary AirNow DOS archive, V2. Figshare, CC BY 4.0. [doi:10.6084/m9.figshare.12687695.v2](https://doi.org/10.6084/m9.figshare.12687695.v2).
 4. **World Health Organization (2021).** *WHO global air quality guidelines*. [Official guidelines](https://www.who.int/publications/i/item/9789240034228).
-5. **Barua, A.; Basak Shuvo, M.; Ali, S.; Khan, A. U.; Saad, A. M.** *HyAQMet: Hourly Air Quality and Meteorology Dataset for Dhaka*. Geoscience Data Journal. Background reference for seasonal-analysis approaches; its dataset reproduction and comparison results are outside this study. [doi:10.1002/gdj3.70111](https://doi.org/10.1002/gdj3.70111).
+5. **Barua, A.; Basak Shuvo, M.; Ali, S.; Khan, A. U.; Saad, A. M.** *HyAQMet: Hourly Air Quality and Meteorology Dataset for Dhaka*. Geoscience Data Journal. Source methods and published results used for credited reproduction. [doi:10.1002/gdj3.70111](https://doi.org/10.1002/gdj3.70111).
 6. **Paul, Tapon (2026).** *Bangladesh Air Quality Index (AQI) Dataset (2000–2025): Historical Hourly Air Pollution Data Across 103 Cities*. Mendeley Data, V2. Source of the excluded earlier archive, retained for provenance. [doi:10.17632/9j447cynb9.2](https://doi.org/10.17632/9j447cynb9.2).
+7. **Barua, Adity; Basak Shuvo, Mrinal.** *Hybrid Atmospheric & Air Quality Meteorology Dataset for Dhaka*. Zenodo, CC BY 4.0. [doi:10.5281/zenodo.20705735](https://doi.org/10.5281/zenodo.20705735). Native source extracts: [public repository](https://github.com/AdityBarua10/HyAQMet/tree/f23ee72d6bbec8a8ab36423295e14f1b8e3d4100).
+8. **Natural Earth.** Public-domain 1:10m Admin 0 country context. [Terms of use](https://www.naturalearthdata.com/about/terms-of-use/). Pinned source and selected-geometry hashes are recorded in [map metadata](data/maps/context_manifest.json).

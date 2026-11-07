@@ -1,0 +1,291 @@
+{
+  "source_release_doi": "10.5281/zenodo.20705735",
+  "source_paper_doi": "10.1002/gdj3.70111",
+  "release_sha256": "420f59fd7e7cd527f1475b309411f27cb8ce4085490ca5daba4e1c517e0c4649",
+  "source_git_provenance": {
+    "commit": "f23ee72d6bbec8a8ab36423295e14f1b8e3d4100",
+    "source_file_bytes_match_commit": {
+      "ERA5_hourly_2017-2022_bst.csv": true,
+      "MERRA-2_hourly_2017-2022_bst.csv": true,
+      "CAMS_3hourly_2017-2022_bst.csv": true
+    },
+    "all_supplied_source_files_match": true,
+    "operation": "Read-only commit/object comparison with filters disabled; source SHA256 also recorded separately"
+  },
+  "source_values_modified": false,
+  "reproduction_is_not_original_dataset_creation": true,
+  "PDF_scope": "Single scientific figures only; no manuscript PDF",
+  "publisher_sha256": "9aec1df3c9e203f73882f6623df2570b53e8674f72f0fbdce35eb72dcac35bb0",
+  "exports": [
+    {
+      "path": "results/reference/release/annual_precipitation_diagnostic.csv",
+      "sha256": "3f33187db88f14838e420b4f5096b0430e9ea5940b8b60f90bb6cda71b48525f",
+      "bytes": 331
+    },
+    {
+      "path": "results/reference/release/blh_associations.csv",
+      "sha256": "ede11fb361972c0b84a6be3466d7364b54b97256818df529386ce74822515c8d",
+      "bytes": 163
+    },
+    {
+      "path": "results/reference/release/blh_deciles.csv",
+      "sha256": "aec36c2a3d4f94107eef913d989646b0bce0080c644c44810d64a506e0afc769",
+      "bytes": 670
+    },
+    {
+      "path": "results/reference/release/final_vs_source_checks.csv",
+      "sha256": "d4ee622dd77eb87b152d9151a12b8353a4c942462d7cd4b0d5e71ca092493558",
+      "bytes": 364
+    },
+    {
+      "path": "results/reference/release/merra_26_candidate_vif.csv",
+      "sha256": "934c53e656a19c4a6bfb5566fb9777c6b23f7181816839052a41c8ce6d796b41",
+      "bytes": 5776
+    },
+    {
+      "path": "results/reference/release/merra_vif_diagnostic.csv",
+      "sha256": "ff55ebd10a9577312843d537cc20eceef23ade8b7e92929055dc569b12119d58",
+      "bytes": 1990
+    },
+    {
+      "path": "results/reference/release/meteorology_and_so2_intercomparison.csv",
+      "sha256": "4cb16566dc7db4cdb99f4d797a971a81375dbb314904cff8f31fafc6eef40c88",
+      "bytes": 1140
+    },
+    {
+      "path": "results/reference/release/meteorology_calendar_season_sensitivities.csv",
+      "sha256": "bb5b7459794cc96125674dc952cdec71fe0532b3145729c577551704f16d4cfd",
+      "bytes": 22992
+    },
+    {
+      "path": "results/reference/release/numeric_summary.csv",
+      "sha256": "4546aac338133070f5cf2a611cfbeb158e96f62d5e69ec4fb35b584fea0adc75",
+      "bytes": 6663
+    },
+    {
+      "path": "results/reference/release/paper_vs_reproduced.csv",
+      "sha256": "d9a18e7e13a8c5bf9252de45eadcb28a3d520fb77ae524459eb1179a5284c61b",
+      "bytes": 2944
+    },
+    {
+      "path": "results/reference/release/pearson_correlation.csv",
+      "sha256": "0e497db32545d64034dd4c4330984ae691024d5c955029d4cd82a022dcbd4efc",
+      "bytes": 33021
+    },
+    {
+      "path": "results/reference/release/pm25_intercomparison.csv",
+      "sha256": "c3f93df2d21c1862897c136cb64762c8f2da4ccfa209b88d574455df96187c89",
+      "bytes": 9833
+    },
+    {
+      "path": "results/reference/release/pm25_native_3hour_sensitivity.csv",
+      "sha256": "29056639781d263a15af07253e6cb21cea347bf4c6419c3b2f783fccfdea6d5e",
+      "bytes": 552
+    },
+    {
+      "path": "results/reference/release/pollutant_calendar_month_climatology.csv",
+      "sha256": "5b126bb67293c20fb884b2a94921397345acdb9516b72f080d1a1bb8a46c4627",
+      "bytes": 3415
+    },
+    {
+      "path": "results/reference/release/pollutant_local_hour_climatology.csv",
+      "sha256": "3fd48d873e5e98db5f2a6ce1a1f276c69989d47550973aa1f202ce278a86cd36",
+      "bytes": 6468
+    },
+    {
+      "path": "results/reference/release/pollutant_monthly_time_series.csv",
+      "sha256": "f0db638aac2b7395e301b6b3737a29eb677700545faf82f15c0dc31ffdf0ea1a",
+      "bytes": 8854
+    },
+    {
+      "path": "results/reference/release/pollutant_notebook_season_sensitivity.csv",
+      "sha256": "0f648aa923f047fa83503596f455b33134cfbfc08a84abc55e2430ce915d0b8b",
+      "bytes": 2868
+    },
+    {
+      "path": "results/reference/release/pollutant_paper_table3_season_sensitivity.csv",
+      "sha256": "3710b2cba12e95ad75d6c1162f557173f34d6ec7f9be5b8b19b9aa514ec5ce3a",
+      "bytes": 2867
+    },
+    {
+      "path": "results/reference/release/quality_and_provenance.json",
+      "sha256": "b9869f55e99c13d195669a0308bf0c1b8d8e8c84112d4e1ece841fb4b80c9f62",
+      "bytes": 6328
+    },
+    {
+      "path": "results/reference/release/released_vs_paper_season_counts.csv",
+      "sha256": "bb6ccb97bb9616350a5d32829b1d36f50ea7e4621d7bd73aeac28112d6344164",
+      "bytes": 206
+    },
+    {
+      "path": "results/reference/release/source_merra_total_mass_sensitivity.csv",
+      "sha256": "b42d377b76db55d4c6327151c80064defa64928ae63f8e9c7eb86555ba12033f",
+      "bytes": 624
+    },
+    {
+      "path": "results/reference/observed_comparison/analysis_manifest.json",
+      "sha256": "b99984de3d34d307476d8aa1d6f3fcfc3ab6f890568a91d5a82e42c348785eb1",
+      "bytes": 1824
+    },
+    {
+      "path": "results/reference/observed_comparison/block_uncertainty.json",
+      "sha256": "8d20e04cabf2677fa85379a864fed8458c8588b4befd9fc62d40773b357bc968",
+      "bytes": 922
+    },
+    {
+      "path": "results/reference/observed_comparison/daily_alignment_sensitivity.csv",
+      "sha256": "3eb991edd03e8c5ed9fb77d9dc5a1d5294125f79ef41d7f1486633e972be9b3a",
+      "bytes": 827
+    },
+    {
+      "path": "results/reference/observed_comparison/monthly_matched_coverage.csv",
+      "sha256": "3c4c5cc7aacecdcd11a72c8b104459ceeadf7b5f607fdbcba316588292ac9e41",
+      "bytes": 4149
+    },
+    {
+      "path": "results/reference/observed_comparison/reference_metrics.csv",
+      "sha256": "a883fd94f5f9c8b2b761f3a366c2472c478f70286ff4afe9cf900d5e1509c848",
+      "bytes": 1502
+    },
+    {
+      "path": "figures/reference/blh_association.png",
+      "sha256": "ea6791549be813855f18ddb62378f540bdbba9e4c149df21d6b35fe91d1aab74",
+      "bytes": 1168652
+    },
+    {
+      "path": "figures/reference/blh_association.svg",
+      "sha256": "1b1ed58cdc7899c44739d684dd36ebe94ff6d70f43d1a2b4f5bb0d3b48d0531b",
+      "bytes": 696854
+    },
+    {
+      "path": "figures/reference/blh_association.pdf",
+      "sha256": "9febe3fd03b7690977dbefd0e25b941cdec5c5b1077856577996d04b62d3118f",
+      "bytes": 323693
+    },
+    {
+      "path": "figures/reference/correlation.png",
+      "sha256": "f93040dab9e87e7867cd70fb48e3be80a51342aede691aabdce4adfcd91f887e",
+      "bytes": 499157
+    },
+    {
+      "path": "figures/reference/correlation.svg",
+      "sha256": "e731cee0c0ddda6431130cebabbabadcb5b19c98caed5c7c2cf7db7f03181100",
+      "bytes": 78922
+    },
+    {
+      "path": "figures/reference/correlation.pdf",
+      "sha256": "798d8242f041f8f14680c6ee18d6ee7a49248d05998494087f11b0a5c75c360f",
+      "bytes": 91924
+    },
+    {
+      "path": "figures/reference/data_quality.png",
+      "sha256": "900f195dee555bbef2e158f077158756bfe90fb9f10e5f9db491c430eee35f2b",
+      "bytes": 433543
+    },
+    {
+      "path": "figures/reference/data_quality.svg",
+      "sha256": "3920feb08018303d64bec9bbe7924b9cf190b612d1b848998cf9861740a68597",
+      "bytes": 19554
+    },
+    {
+      "path": "figures/reference/data_quality.pdf",
+      "sha256": "327909f64b31803cc9c0ecfdb7f74840dc07c0c5d98ae1216e7381d75c729192",
+      "bytes": 19893
+    },
+    {
+      "path": "figures/reference/pm25_cross_source.png",
+      "sha256": "484a7f95a5e08cfaa4689013792826e13e953dad5708aeccb9bbec0fdaa95a20",
+      "bytes": 1820919
+    },
+    {
+      "path": "figures/reference/pm25_cross_source.svg",
+      "sha256": "60203333c37ce5d189d96c4a309f48bb2f84f63f889eec7b0a17cf51637171ed",
+      "bytes": 954313
+    },
+    {
+      "path": "figures/reference/pm25_cross_source.pdf",
+      "sha256": "7621ded69bb1a2f8983891e29c715b58a59245c1fad375c1e9d435d170acb32d",
+      "bytes": 450196
+    },
+    {
+      "path": "figures/reference/pollutant_climatology.png",
+      "sha256": "eab303a3cf9bd8a22fc619ed6f6bc4b297c10271173eef8f2ccf1afd55c298f5",
+      "bytes": 651338
+    },
+    {
+      "path": "figures/reference/pollutant_climatology.svg",
+      "sha256": "6d8f8e925cd72e2a14ec85b1a4051f8db5445972a0ceed6d3ad1d19c88be22c8",
+      "bytes": 24513
+    },
+    {
+      "path": "figures/reference/pollutant_climatology.pdf",
+      "sha256": "eb861654171d394144a25eaf94ae206c0c6703cd2ca87c54e682da8178b99613",
+      "bytes": 15411
+    },
+    {
+      "path": "figures/reference/workflow.png",
+      "sha256": "e8b3e2b6a9326d1c78b6c656e3cea7f7185b42a24061acf41650e6c283627cd5",
+      "bytes": 296872
+    },
+    {
+      "path": "figures/reference/workflow.svg",
+      "sha256": "8213816c00b8fd14f50507e0bd2427ff2a9a7d9e3bd72ed1e0e2bce781daca34",
+      "bytes": 5212
+    },
+    {
+      "path": "figures/reference/workflow.pdf",
+      "sha256": "f5b5e5687cfd8e249d433849b3d4aa4ce4dc43b3204f638f01618ee19bffc75b",
+      "bytes": 18698
+    },
+    {
+      "path": "figures/reference/independent_reference_comparison.png",
+      "sha256": "e318fb4113b255cf2d0c6cb1cd4692301213a6031e2b26a2ebfe779fb2650b21",
+      "bytes": 2589897
+    },
+    {
+      "path": "figures/reference/independent_reference_comparison.svg",
+      "sha256": "9e293089252465bbe8a588684476f394af0f4e4b24f19b6fba6e8694fd834b2c",
+      "bytes": 1034689
+    },
+    {
+      "path": "figures/reference/independent_reference_comparison.pdf",
+      "sha256": "11bda28701c590f0bc5280e2696fd502bf467d6fd9fc412366349cdc217991b5",
+      "bytes": 428666
+    },
+    {
+      "path": "figures/reference/matched_monthly_comparison.png",
+      "sha256": "e74241fdb01c07d4cb9013a33098628a551f293a54ff4421f9f2b08447b7404e",
+      "bytes": 691565
+    },
+    {
+      "path": "figures/reference/matched_monthly_comparison.svg",
+      "sha256": "47013a0d1102b8d24d2d70b7e193aee72476ad29753ed9843cc88afde1fa4aab",
+      "bytes": 10510
+    },
+    {
+      "path": "figures/reference/matched_monthly_comparison.pdf",
+      "sha256": "ea60133b932e9be43f697b07104531d71ae1b55a54bf33743a1b8ca54ad7c71d",
+      "bytes": 14383
+    },
+    {
+      "path": "figures/study_area.png",
+      "sha256": "34f856e0184934af2bdf440b12c5138c5bab92e33bb30772327bc4dda6b04920",
+      "bytes": 1105544
+    },
+    {
+      "path": "figures/study_area.svg",
+      "sha256": "8dc6be496b3871e847cf2d2ea4e4d32bee44a17c841abf10dd9b3634f08b0f4e",
+      "bytes": 895237
+    },
+    {
+      "path": "figures/study_area.pdf",
+      "sha256": "7b3090bd2d897d9a6c23b8abbd7103c3cad25aba2f9bb321d7e8acd2c76ef1b1",
+      "bytes": 399040
+    },
+    {
+      "path": "data/maps/map_manifest.json",
+      "sha256": "9a4191d6d3efbca170a49d5d6ca8eea4b584c89b4db699a553e6b81e46f656cb",
+      "bytes": 1881
+    }
+  ]
+}

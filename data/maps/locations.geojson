@@ -1,0 +1,27 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "embassy",
+        "name": "Dhaka embassy reference monitor",
+        "role": "Observed PM2.5 reference location",
+        "source": "EPA-associated study location; 10.23719/1528454",
+        "coordinate_status": "Reported location; not a surveyed instrument position"
+      },
+      "geometry": {"type": "Point", "coordinates": [90.424614, 23.796374]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "paper_reference",
+        "name": "Paper nominal Dhaka reference",
+        "role": "Approximate city reference in the source paper",
+        "source": "10.1002/gdj3.70111, section 2.2",
+        "coordinate_status": "Approximate reference point, not a confirmed extraction grid node"
+      },
+      "geometry": {"type": "Point", "coordinates": [90.4, 23.8]}
+    }
+  ]
+}

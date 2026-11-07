@@ -1,0 +1,3 @@
+# Matplotlib's valid generated SVG paths include line-ending spaces.
+*.svg -whitespace linguist-generated=true
+data/maps/*.geojson linguist-generated=true
