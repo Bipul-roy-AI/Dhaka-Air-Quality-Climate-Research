@@ -169,7 +169,7 @@
     "airnow_mirror": "https://doi.org/10.6084/m9.figshare.12687695.v2"
   },
   "presentation": "Primary weather branch only in model table/figure; lag-one conditional sensitivity remains in full run.",
-  "publisher_sha256": "63aa5581161714c8b740d5a371eea8c1c4c9bcda0796756d4f675c5082bd2754",
+  "publisher_sha256": "d9612bf0815be8f639aeffd0ee448f10644e585c89019d95d25d542b7ba122d8",
   "station_day": {
     "purpose": "Station-day identity/alignment sensitivity within the embassy monitoring network, not independent-site validation",
     "epa_calendar_days": 2192,

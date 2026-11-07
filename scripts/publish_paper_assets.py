@@ -1,4 +1,4 @@
-"""Select the manuscript's tables and figures from a completed observed-PM/weather study run.
+"""Select research tables and figures from a completed observed-PM/weather study run.
 
 Usage: python scripts/publish_paper_assets.py --run artifacts/run --output artifacts/paper
 The destination must be new. No raw inputs or existing publication files change.
@@ -126,7 +126,7 @@ def main():
         staging.mkdir()
         publish(args.run, staging)
         staging.rename(args.output)
-    print(f'Manuscript assets written to {args.output}')
+    print(f'Research figures and tables written to {args.output}')
 
 
 if __name__ == '__main__':

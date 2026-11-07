@@ -32,7 +32,7 @@ The fetch retrieves the EPA observed-data workbook, Figshare/AirNow hourly mirro
 
 ## Run the observed-PM and weather analyses
 
-Choose a fresh run directory. Include the mirror ZIP to reproduce the station-day sensitivity in the manuscript. Omitting `--mirror` runs the two principal analyses without that optional diagnostic.
+Choose a fresh run directory. Include the mirror ZIP to reproduce the station-day sensitivity reported in the README. Omitting `--mirror` runs the two principal analyses without that optional diagnostic.
 
 ```bash
 python scripts/run_paper_style_analysis.py \
@@ -52,7 +52,7 @@ python scripts/run_paper_style_analysis.py \
 
 Prediction results are retrospective. The primary weather extension uses conservative lag-2 UTC weather; lag-1 weather is a separately labelled overlapping-day conditional benchmark. Observed scoring targets are never imputed. Full-record daily QA, averaging conventions and publication latency remain incompletely verified. The analyses do not certify operational forecasting, causal meteorological effects or health outcomes.
 
-## Stage the manuscript assets and rebuild the PDF
+## Stage the research figures and tables
 
 The publisher reads a completed study run and writes selected figures/results into a **new** directory. It neither publishes to GitHub nor overwrites checked-in assets.
 
@@ -61,21 +61,18 @@ python scripts/publish_paper_assets.py \
   --run artifacts/reproduce_run --output artifacts/reproduce_assets
 ```
 
-Inspect the staged tables, figures and provenance first. The next commands deliberately **replace** curated assets and rebuild the PDF from the root manuscript. PDF generation additionally requires Pandoc, XeLaTeX and DejaVu Serif/DejaVu Sans Mono fonts; these are outside the Python lock.
+Inspect the staged tables, figures and provenance first. The next commands deliberately **replace** the curated assets.
 
 ```bash
 cp artifacts/reproduce_assets/figures/* figures/
 cp artifacts/reproduce_assets/results/* results/
-pandoc README.md --standalone --pdf-engine=xelatex \
-  -V mainfont='DejaVu Serif' -V monofont='DejaVu Sans Mono' \
-  -V geometry:margin=0.8in -V fontsize=10pt -o paper.pdf
 ```
 
-The publisher includes the five primary prediction models; the overlapping-day lag-1 benchmark stays in the full run. Optional station-day and six-season tables are staged when present. Exact image/PDF bytes can vary with graphics/document toolchains; compare input hashes, numerical tables, case counts and conclusions.
+The publisher includes the five primary prediction models; the overlapping-day lag-1 benchmark stays in the full run. Optional station-day and six-season tables are staged when present. Exact image bytes can vary with the graphics toolchain; compare input hashes, numerical tables, case counts and conclusions.
 
 ## Layout and history
 
-- `README.md`: manuscript; `paper.pdf`: generated PDF.
+- `README.md`: research overview, methods, results and references.
 - `figures/`, `results/`: curated assets; `scripts/`, `tests/`: analysis code and scientific checks.
 - `requirements.in`, `requirements.lock`: declared and hash-pinned Python dependencies.
 - `artifacts/`: ignored source acquisitions and complete run outputs; not committed input data.
